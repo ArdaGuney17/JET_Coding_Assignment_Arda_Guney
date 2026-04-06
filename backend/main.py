@@ -1,29 +1,55 @@
-# Install necessary libraries for backend
-# run the following command in the terminal: pip install fastapi uvicorn requests
+# Setup requirement: run 'pip install fastapi uvicorn requests' in your terminal
+# Or install via the requirements file: 'pip install -r requirements.txt'
+
+# Import the necessary libraries to build the API and fetch data
 from fastapi import FastAPI
 import requests
 
-# Initialize the FastAPI application for JET Backend
+# Initialize the FastAPI application
 JET_app = FastAPI()
 
-# Define the API URL for Just Eat API
+# Target URL for the Just Eat Discovery API (Postcode: CT12EH)
 API_URL = "https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/CT12EH"
 
-# Define the endpoint for the API
+# Define the root endpoint to extract and filter restaurant data
 @JET_app.get("/")
-# Define the function to extract restaurants data
 def extract_restaurants_data():
-    # Define the headers for the API request
+    # Mimic a real browser to prevent 403 Forbidden errors from the API
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
         "X-Project-Name": "Arda-JET-Technical-Assessment"
     }
-    # Send the GET request to the API
+    
+    # Fetch the live data from Just Eat
     response = requests.get(API_URL, headers=headers)
     
-    # Check if the request was successful
+    # Proceed only if the server responds with a success status (200 OK)
     if response.status_code == 200:
-        return response.json()
+        raw_data = response.json()
+
+        # Isolate the list of restaurants from the full JSON data and get the first 10 restaurants
+        restaurants_list = raw_data.get("restaurants", [])[:10]
+
+        # Initialize an empty list for our filtered data
+        cleaned_data = []
+
+        # Extract only the necessary details name, cuisines, rating and address for each restaurant
+        for restaurant in restaurants_list:
+            name = restaurant.get("name")
+            cuisines = restaurant.get("cuisines", [])
+            rating = restaurant.get("rating", {}).get("starRating")
+            address = restaurant.get("address", {})
+            
+            # Append the clean dictionary that has the necessary data to our final list
+            cleaned_data.append({
+                "name": name,
+                "cuisines": cuisines,
+                "rating": rating,
+                "address": address
+            })  
+
+        # Return the filtered list with the necessary data
+        return cleaned_data
     
-    # Return an error message if the request was not successful
+    # Fallback error response if the Just Eat API fails
     return {"message": "Failed to extract data", "status_code": response.status_code}
