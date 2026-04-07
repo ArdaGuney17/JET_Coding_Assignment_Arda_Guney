@@ -30,8 +30,8 @@ def extract_restaurants_data():
         # Isolate the list of restaurants from the full JSON data and get the first 10 restaurants
         restaurants_list = raw_data.get("restaurants", [])[:10]
 
-        # Initialize an empty list for our filtered data
-        cleaned_data = []
+        # Initialize an empty list for our filtered necessary data
+        target_data = []
 
         # Extract only the necessary details name, cuisines, rating and address for each restaurant
         # By adding empty dictionaries {} and empty lists [] as the fallback values, we prevent the API from returning an error if the data is not found
@@ -39,23 +39,25 @@ def extract_restaurants_data():
             name = restaurant.get("name")
             # Extract the cuisines list from the raw data
             raw_cuisines = restaurant.get("cuisines", [])
-            # Extract the "name" value from the each cuisine dictionary in the raw cuisines list
-            cuisines_list = [cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")]
+            # Extract the "name" value from the each cuisine dictionary in the raw cuisines list and format them into a single string
+            cuisines_list = f"{', '.join([cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")])}"
             # Extract the "starRating" value from the "rating" dictionary in the raw data
             rating = restaurant.get("rating", {}).get("starRating")
             # Extract the address dictionary from the raw data 
-            address = restaurant.get("address", {})
+            raw_address = restaurant.get("address", {})
+            # Extract the address details from the raw data and format them into a single string
+            clean_adress = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}, {raw_address.get('location', {}).get('coordinates', [])}"
             
             # Append the clean dictionary that has the necessary data to our final list
-            cleaned_data.append({
+            target_data.append({
                 "name": name,
                 "cuisines": cuisines_list,
                 "rating": rating,
-                "address": address
+                "address": clean_adress
             })  
 
         # Return the filtered list with the necessary data
-        return cleaned_data
+        return target_data
     
     # Fallback error response if the Just Eat API fails
     return {"message": "Failed to extract data", "status_code": response.status_code}
