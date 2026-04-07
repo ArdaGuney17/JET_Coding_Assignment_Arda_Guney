@@ -6,10 +6,11 @@ from fastapi import FastAPI
 import requests
 
 # Declared a class to handle the Just Eat API requests and data extraction process in a more flexible and scalable way
+# Via the postcode parameter, this class enables the API to be reusable for different postcodes
 class JET_API_Client:
-    def __init__(self):
+    def __init__(self, postcode: str):
         # Target URL for the Just Eat Discovery API (Postcode: CT12EH)
-        self.base_url = "https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/CT12EH"
+        self.base_url = f"https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/{postcode}"
         # Mimic a real browser to prevent 403 Forbidden errors from the API
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
@@ -25,12 +26,13 @@ class JET_API_Client:
         return None
     
     # Method to extract the necessary data from the raw data
-    def extract_restaurants_data(self):
+    def extract_restaurants_data(self, limit: int):
         raw_data = self.get_restaurants()
         # Proceed only if the server responds with a success status (200 OK)
         if raw_data:
             # Isolate the list of restaurants from the full JSON data and get the first 10 restaurants
-            restaurants_list = raw_data.get("restaurants", [])[:10]
+            # Via the limit parameter, this method enables the API to be reusable for different data limits
+            restaurants_list = raw_data.get("restaurants", [])[:limit]
             # Initialize an empty list for our filtered necessary data
             target_data = []
             # Extract only the necessary details name, cuisines, rating and address for each restaurant
@@ -62,14 +64,13 @@ class JET_API_Client:
 # Initialize the FastAPI application
 JET_app = FastAPI()
 
-# Create an instance of the JET_API_Client class
-JET_client = JET_API_Client()
-
 # Define the root endpoint to extract and filter restaurant data
 @JET_app.get("/")
 def extract_restaurants_data():
-    # Call the extract_restaurants_data method to fetch and filter the data
-    return JET_client.extract_restaurants_data()
+    # Create an instance of the JET_API_Client class with the postcode CT12EH
+    JET_client = JET_API_Client("CT12EH")
+    # Return the first 10 restaurants from the filtered list with the necessary data
+    return JET_client.extract_restaurants_data(10)
 
 """
 # Initialize the FastAPI application
