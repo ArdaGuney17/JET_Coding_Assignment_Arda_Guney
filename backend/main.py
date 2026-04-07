@@ -5,11 +5,59 @@
 from fastapi import FastAPI
 import requests
 
+# Create a class to handle the Just Eat API requests and data extraction process in a more colaborative and scalable way
+class JET_API_Client:
+    def __init__(self, postcode: str):
+        self.postcode = postcode
+        self.base_url = f"https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/{postcode}"
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
+            "X-Project-Name": "Arda-JET-Technical-Assessment"
+        }
+    
+    def get_restaurants(self):
+        response = requests.get(self.base_url, headers=self.headers)
+        if response.status_code == 200:
+            return response.json()
+        return None
+    
+    def extract_restaurants_data(self, limit: int):
+        raw_data = self.get_restaurants()
+        if raw_data:
+            restaurants_list = raw_data.get("restaurants", [])[:limit]
+            target_data = []
+            for restaurant in restaurants_list:
+                name = restaurant.get("name")
+                raw_cuisines = restaurant.get("cuisines", [])
+                cuisines_list = ", ".join([cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")])
+                rating = restaurant.get("rating", {}).get("starRating")
+                raw_address = restaurant.get("address", {})
+                clean_adress = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}, {raw_address.get('location', {}).get('coordinates', [])}"
+                target_data.append({
+                    "name": name,
+                    "cuisines": cuisines_list,
+                    "rating": rating,
+                    "address": clean_adress
+                })
+            return target_data
+        return None
+
+# Create a FastAPI application
+JET_app = FastAPI()
+
+# Create a route to extract and filter restaurant data
+@JET_app.get("/")
+def extract_restaurants_data():
+    JET_client = JET_API_Client("CT12EH")
+    return JET_client.extract_restaurants_data(10)
+
+
+"""
 # Initialize the FastAPI application
 JET_app = FastAPI()
 
 # Target URL for the Just Eat Discovery API (Postcode: CT12EH)
-API_URL = "https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/CT12EH"
+JET_API_URL = "https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/CT12EH"
 
 # Define the root endpoint to extract and filter restaurant data
 @JET_app.get("/")
@@ -21,7 +69,7 @@ def extract_restaurants_data():
     }
     
     # Fetch the live data from Just Eat
-    response = requests.get(API_URL, headers=headers)
+    response = requests.get(JET_API_URL, headers=headers)
     
     # Proceed only if the server responds with a success status (200 OK)
     if response.status_code == 200:
@@ -41,7 +89,7 @@ def extract_restaurants_data():
             raw_cuisines = restaurant.get("cuisines", [])
             # Extract the "name" value from the each cuisine dictionary in the raw cuisines list and format them into a single string
             cuisines_list = f"{', '.join([cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")])}"
-            # Extract the "starRating" value from the "rating" dictionary in the raw data
+            # Extract the "starRating" value from the "rating" dictionary in the raw data to get numeric rating
             rating = restaurant.get("rating", {}).get("starRating")
             # Extract the address dictionary from the raw data 
             raw_address = restaurant.get("address", {})
@@ -61,3 +109,4 @@ def extract_restaurants_data():
     
     # Fallback error response if the Just Eat API fails
     return {"message": "Failed to extract data", "status_code": response.status_code}
+"""
