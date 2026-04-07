@@ -34,16 +34,22 @@ def extract_restaurants_data():
         cleaned_data = []
 
         # Extract only the necessary details name, cuisines, rating and address for each restaurant
+        # By adding empty dictionaries {} and empty lists [] as the fallback values, we prevent the API from returning an error if the data is not found
         for restaurant in restaurants_list:
             name = restaurant.get("name")
-            cuisines = restaurant.get("cuisines", [])
+            # Extract the cuisines list from the raw data
+            raw_cuisines = restaurant.get("cuisines", [])
+            # Extract the "name" value from the each cuisine dictionary in the raw cuisines list
+            cuisines_list = [cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")]
+            # Extract the "starRating" value from the "rating" dictionary in the raw data
             rating = restaurant.get("rating", {}).get("starRating")
+            # Extract the address dictionary from the raw data 
             address = restaurant.get("address", {})
             
             # Append the clean dictionary that has the necessary data to our final list
             cleaned_data.append({
                 "name": name,
-                "cuisines": cuisines,
+                "cuisines": cuisines_list,
                 "rating": rating,
                 "address": address
             })  
