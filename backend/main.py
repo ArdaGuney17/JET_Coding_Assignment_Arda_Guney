@@ -59,6 +59,18 @@ class JET_API_Client:
         # Fallback error response if the Just Eat API fails
         return None
 
+# Initialize the FastAPI application
+JET_app = FastAPI()
+
+# Create an instance of the JET_API_Client class
+JET_client = JET_API_Client()
+
+# Define the root endpoint to extract and filter restaurant data
+@JET_app.get("/")
+def extract_restaurants_data():
+    # Call the extract_restaurants_data method to fetch and filter the data
+    return JET_client.extract_restaurants_data()
+
 """
 # Initialize the FastAPI application
 JET_app = FastAPI()
