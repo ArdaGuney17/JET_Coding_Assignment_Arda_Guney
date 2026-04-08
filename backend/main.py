@@ -4,6 +4,9 @@
 # Import the necessary libraries to build the API and fetch data
 from fastapi import FastAPI
 import requests
+# Import the CORSMiddleware to allow React app to talk to Python
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Declared a class to handle the Just Eat API requests and data extraction process in a more flexible and scalable way
 # Via the postcode parameter, this class enables the API to be reusable for different postcodes
@@ -63,6 +66,15 @@ class JET_API_Client:
 
 # Initialize the FastAPI application
 JET_app = FastAPI()
+
+# Allow React app to talk to Python
+JET_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"], # React Vite server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the root endpoint to extract and filter restaurant data
 @JET_app.get("/")
