@@ -13,15 +13,18 @@
 }
 
 body {
-  margin: 10px;
+  margin: 0;
   display: flex;
-  place-items: start;
-  min-width: 320px;
-  min-height: 100vh;
+  /* Centers horizontally */
+  justify-content: center;
+  /* Makes sure the body spans the whole screen */
+  width: 100%;
+  /* Just Eat Orange background aligns with the brand color*/
+  background-color: #ff8000;
 }
 
 h1 {
   font-size: 2.5rem;
   line-height: 1.1;
-  color: #000;
+  color: #ffffff;
 }

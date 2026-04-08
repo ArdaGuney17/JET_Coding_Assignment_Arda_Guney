@@ -19,23 +19,22 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className='app-container'>
       <h1>Just Eat Takeaway Coding Assignment</h1>
       <p>Fetching local restaurants directly from the API</p>
       {/* Fetched data connects to the UI here
           React gets the restaurants list fetched from the API and creates a separate
           list item for every instance in the list to display all the restaurants' details.
       */}
-      <ul>
+      <ul className='restaurant-list'>
         {restaurants.map((restaurant, index) => (
-          <li key={index}>
+          <li key={index} className='restaurant-card'>
             {/* Display the restaurant name hierarchically above the other details by h3 tag */}
-            <hr />
-            <h3>
+            <h3 className='restaurant-name'>
               {restaurant.Name || restaurant.name}
             </h3>
             {/* Display the restaurant cuisines, rating, and address in same hierarchy */}
-            <div>
+            <div className='restaurant-details'>
               <p><strong>Cuisines:</strong> {restaurant.Cuisines || restaurant.cuisines}</p>
               <p><strong>Rating:</strong> {restaurant.Rating || restaurant.rating}</p>
               <p><strong>Address:</strong> {restaurant.Address || restaurant.address}</p>
