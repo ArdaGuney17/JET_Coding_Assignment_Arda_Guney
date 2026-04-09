@@ -40,22 +40,32 @@ class JET_API_Client:
             target_data = []
             # Extract only the necessary details name, cuisines, rating and address for each restaurant
             # By adding empty dictionaries {} and empty lists [] as the fallback values, we prevent the API from returning an error if the data is not found
+            
+            # List of marketing tags we want to filter out to focus on actual restaurant data 
+            excluded_tags = {"Deals", "Freebies", "Offers", "Collect stamps"}
+            
             for restaurant in restaurants_list:
                 name = restaurant.get("name")
-                # Extract the cuisines list from the raw data
+                
+                # Extract and filter cuisines
                 raw_cuisines = restaurant.get("cuisines", [])
-                # Extract the "name" value from the each cuisine dictionary in the raw cuisines list and format them into a single string
-                cuisines_list = f"{', '.join([cuisine.get("name") for cuisine in raw_cuisines if cuisine.get("name")])}"
+                filtered_cuisine_names = [
+                    cuisine.get("name") 
+                    for cuisine in raw_cuisines 
+                    if cuisine.get("name") and cuisine.get("name") not in excluded_tags
+                ]
+                cuisines = ", ".join(filtered_cuisine_names)
                 # Extract the "starRating" value from the "rating" dictionary in the raw data to get numeric rating
                 rating = restaurant.get("rating", {}).get("starRating")
                 # Extract the address dictionary from the raw data 
                 raw_address = restaurant.get("address", {})
-                # Extract the address details from the raw data and format them into a single string
-                clean_adress = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}, {raw_address.get('location', {}).get('coordinates', [])}"
+                # Extract the human readable address details city, firstline and postcode 
+                # excluding the coordinates from the raw data and format them into a single string
+                clean_adress = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}"
                 # Append the clean dictionary that has the necessary data to our final list
                 target_data.append({
                     "name": name,
-                    "cuisines": cuisines_list,
+                    "cuisines": cuisines,
                     "rating": rating,
                     "address": clean_adress
                 })
