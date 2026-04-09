@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+// 1. Import the logo from your assets folder
+import jetLogo from './assets/jet-logo-white.png'
 
 function App() {
   // Initialize state to hold the fetched restaurant array.
@@ -29,23 +31,27 @@ function App() {
           React gets the restaurants list fetched from the API and creates a separate
           list item for every instance in the list to display all the restaurants' details.
       */}
-      <header className="bg-[#ff8000] py-10 px-5 shadow-md">
-        <div className="max-w-[800px] mx-auto">
-
-          <h1 className="text-4xl font-bold text-white text-center mb-2">
-            Just Eat Takeaway Coding Assignment
-          </h1>
-
-          <p className="text-white text-center mb-8 opacity-90">
-            Displaying the first 10 fetched local restaurants directly from the Just Eat Takeaway API
-          </p>
+      <header className="bg-[#ff8000] py-1 px-5 shadow-md">
+        <div className="max-w-[1000px] mx-auto">
+          <img
+            src={jetLogo}
+            alt="Just Eat Takeaway Logo"
+            className="h-30 mx-auto"
+          />
         </div>
       </header>
-      <main className="max-w-[800px] mx-auto p-5 pt-8">
-        <ul className="list-none p-0 space-y-4">
+      <main className="max-w-[1000px] mx-auto p-5 pt-8">
+        <h1 className="text-[#ff8000] text-2xl md:text-4xl font-bold text-center">
+          Complete at Home Coding Assignment
+        </h1>
+
+        <p className="text-[#ff8000] text-center mb-8 opacity-90">
+          Displaying the details of the first 10 restaurants fetched from the Just Eat Takeaway API
+        </p>
+        <ul className="list-none p-0 space-y-4" >
           {restaurants.map((restaurant, index) => (
             /* Card Styling adding border, rounded corners, padding, shadow, and hover effect */
-            <li key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
+            <li key={index} className="bg-[#C1DADE] border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
               {/* Display the restaurant name hierarchically above the other details by h3 tag */}
               {/* Use the official JET Orange color for restaurant names */}
               <h3 className="text-2xl font-bold text-[#ff8000] mb-3 text-left">
