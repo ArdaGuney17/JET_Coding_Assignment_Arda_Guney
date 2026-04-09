@@ -51,6 +51,7 @@ function App() {
         <ul className="list-none p-0 space-y-4" >
           {restaurants.map((restaurant, index) => (
             /* Card Styling adding border, rounded corners, padding, shadow, and hover effect */
+            /* Use the official JET Cupcake Blue color for restaurant cards */
             <li key={index} className="bg-[#C1DADE] border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
               {/* Display the restaurant name hierarchically above the other details by h3 tag */}
               {/* Use the official JET Orange color for restaurant names */}
