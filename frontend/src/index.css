@@ -1,32 +1,31 @@
+/* 
+  Tailwind CSS v4 Import 
+  Allows using classes like 'flex', 'bg-orange', and 'shadow' directly in our JSX.
+*/
 @import "tailwindcss";
 
 :root {
+  /* Sets the global font as Inter, which is a modern sans-serif font. */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color: #242424;
-  background-color: #ffffff;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  /* Ensures text looks smooth on all devices */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  /* Resets default browser margins to ensure the background covers the whole screen. */
   margin: 0;
-  display: flex;
-  /* Centers horizontally */
-  justify-content: center;
-  /* Makes sure the body spans the whole screen */
-  width: 100%;
-  /* Just Eat Orange background aligns with the brand color*/
-  background-color: #ff8000;
+
+  /* 
+    Ensures the body is at least as tall as the browser window, 
+    preventing the background color from 'cutting off' on short pages. 
+  */
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 2.5rem;
-  line-height: 1.1;
-  color: #ffffff;
-}
+/* 
+  NOTE: Global styles for layout (flex, centering) and colors have been 
+  moved to App.jsx utility classes to ensure a single source of truth 
+  and improve component modularity.
+*/

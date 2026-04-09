@@ -18,49 +18,54 @@ function App() {
   }, [])
 
   return (
-    /* max-width 800px, centered, with padding */
-    <div className="max-w-[800px] mx-auto p-5 font-sans">
+    /* max-width 800px, centered, with padding and making the background color JET orange */
+    <div className="min-h-screen bg-[#ff8000] p-5 font-sans">
 
-      {/* Title: White to pop against your orange background, bold and centered */}
-      <h1 className="text-4xl font-bold text-white text-center mb-2">
-        Just Eat Takeaway Coding Assignment
-      </h1>
-
-      <p className="text-white text-center mb-8 opacity-90">
-        Fetching local restaurants directly from the API
-      </p>
+      {/* This inner div is the 'Content Frame'.
+       - max-w-[800px]: Keeps the list from getting too wide on big monitors.
+       - mx-auto: Centers this frame horizontally.
+      */}
       {/* Fetched data connects to the UI here
           React gets the restaurants list fetched from the API and creates a separate
           list item for every instance in the list to display all the restaurants' details.
       */}
-      {/* The List: No bullets, centered in the frame */}
-      <ul className="list-none p-0 space-y-4">
-        {restaurants.map((restaurant, index) => (
-          /* The Card: White background, rounded corners, soft shadow, and a hover effect */
-          <li key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
+      <div className="max-w-[800px] mx-auto">
 
-            {/* Display the restaurant name hierarchically above the other details by h3 tag */}
-            {/* Restaurant Name: The official JET Orange color */}
-            <h3 className="text-2xl font-bold text-[#ff8000] mb-3 text-left">
-              {restaurant.Name || restaurant.name}
-            </h3>
+        <h1 className="text-4xl font-bold text-white text-center mb-2">
+          Just Eat Takeaway Coding Assignment
+        </h1>
 
-            {/* Display the restaurant cuisines, rating, and address in same hierarchy */}
-            <div className="space-y-1 text-left">
-              <p className="text-gray-700">
-                <span className="font-bold">Cuisines:</span> {restaurant.Cuisines || restaurant.cuisines}
-              </p>
-              <p className="text-gray-700">
-                <span className="font-bold">Rating:</span> {restaurant.Rating || restaurant.rating}
-              </p>
-              <p className="text-gray-700">
-                <span className="font-bold">Address:</span> {restaurant.Address || restaurant.address}
-              </p>
-            </div>
+        <p className="text-white text-center mb-8 opacity-90">
+          Fetching local restaurants directly from the API
+        </p>
 
-          </li>
-        ))}
-      </ul>
+        <ul className="list-none p-0 space-y-4">
+          {restaurants.map((restaurant, index) => (
+            /* Card Styling adding border, rounded corners, padding, shadow, and hover effect */
+            <li key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
+              {/* Display the restaurant name hierarchically above the other details by h3 tag */}
+              {/* Use the official JET Orange color for restaurant names */}
+              <h3 className="text-2xl font-bold text-[#ff8000] mb-3 text-left">
+                {restaurant.Name || restaurant.name}
+              </h3>
+
+              {/* Display the restaurant cuisines, rating, and address in same hierarchy and bold the labels*/}
+              <div className="space-y-1 text-left">
+                <p className="text-gray-700">
+                  <span className="font-bold">Cuisines:</span> {restaurant.Cuisines || restaurant.cuisines}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-bold">Rating:</span> {restaurant.Rating || restaurant.rating}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-bold">Address:</span> {restaurant.Address || restaurant.address}
+                </p>
+              </div>
+
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
