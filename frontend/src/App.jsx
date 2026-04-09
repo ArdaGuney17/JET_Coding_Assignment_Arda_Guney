@@ -19,7 +19,7 @@ function App() {
 
   return (
     /* max-width 800px, centered, with padding and making the background color JET orange */
-    <div className="min-h-screen bg-[#ff8000] p-5 font-sans">
+    <div className="min-h-screen bg-[#ff000] font-sans">
 
       {/* This inner div is the 'Content Frame'.
        - max-w-[800px]: Keeps the list from getting too wide on big monitors.
@@ -29,16 +29,19 @@ function App() {
           React gets the restaurants list fetched from the API and creates a separate
           list item for every instance in the list to display all the restaurants' details.
       */}
-      <div className="max-w-[800px] mx-auto">
+      <header className="bg-[#ff8000] py-10 px-5 shadow-md">
+        <div className="max-w-[800px] mx-auto">
 
-        <h1 className="text-4xl font-bold text-white text-center mb-2">
-          Just Eat Takeaway Coding Assignment
-        </h1>
+          <h1 className="text-4xl font-bold text-white text-center mb-2">
+            Just Eat Takeaway Coding Assignment
+          </h1>
 
-        <p className="text-white text-center mb-8 opacity-90">
-          Fetching local restaurants directly from the API
-        </p>
-
+          <p className="text-white text-center mb-8 opacity-90">
+            Displaying the first 10 fetched local restaurants directly from the Just Eat Takeaway API
+          </p>
+        </div>
+      </header>
+      <main className="max-w-[800px] mx-auto p-5 pt-8">
         <ul className="list-none p-0 space-y-4">
           {restaurants.map((restaurant, index) => (
             /* Card Styling adding border, rounded corners, padding, shadow, and hover effect */
@@ -65,7 +68,7 @@ function App() {
             </li>
           ))}
         </ul>
-      </div>
+      </main>
     </div>
   )
 }

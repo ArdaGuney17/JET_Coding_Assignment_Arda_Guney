@@ -4,18 +4,10 @@
 */
 @import "tailwindcss";
 
-:root {
-  /* Sets the global font as Inter, which is a modern sans-serif font. */
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  /* Ensures text looks smooth on all devices */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
-  /* Resets default browser margins to ensure the background covers the whole screen. */
+  /* Resets default browser margins and padding to ensure the background covers the whole screen. */
   margin: 0;
+  padding: 0;
 
   /* 
     Ensures the body is at least as tall as the browser window, 
