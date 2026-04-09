@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css' // Import the styles specifically for this component
 
 function App() {
   // Initialize state to hold the fetched restaurant array.
@@ -19,25 +18,44 @@ function App() {
   }, [])
 
   return (
-    <div className='app-container'>
-      <h1>Just Eat Takeaway Coding Assignment</h1>
-      <p>Fetching local restaurants directly from the API</p>
+    /* max-width 800px, centered, with padding */
+    <div className="max-w-[800px] mx-auto p-5 font-sans">
+
+      {/* Title: White to pop against your orange background, bold and centered */}
+      <h1 className="text-4xl font-bold text-white text-center mb-2">
+        Just Eat Takeaway Coding Assignment
+      </h1>
+
+      <p className="text-white text-center mb-8 opacity-90">
+        Fetching local restaurants directly from the API
+      </p>
       {/* Fetched data connects to the UI here
           React gets the restaurants list fetched from the API and creates a separate
           list item for every instance in the list to display all the restaurants' details.
       */}
-      <ul className='restaurant-list'>
+      {/* The List: No bullets, centered in the frame */}
+      <ul className="list-none p-0 space-y-4">
         {restaurants.map((restaurant, index) => (
-          <li key={index} className='restaurant-card'>
+          /* The Card: White background, rounded corners, soft shadow, and a hover effect */
+          <li key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
+
             {/* Display the restaurant name hierarchically above the other details by h3 tag */}
-            <h3 className='restaurant-name'>
+            {/* Restaurant Name: The official JET Orange color */}
+            <h3 className="text-2xl font-bold text-[#ff8000] mb-3 text-left">
               {restaurant.Name || restaurant.name}
             </h3>
+
             {/* Display the restaurant cuisines, rating, and address in same hierarchy */}
-            <div className='restaurant-details'>
-              <p><strong>Cuisines:</strong> {restaurant.Cuisines || restaurant.cuisines}</p>
-              <p><strong>Rating:</strong> {restaurant.Rating || restaurant.rating}</p>
-              <p><strong>Address:</strong> {restaurant.Address || restaurant.address}</p>
+            <div className="space-y-1 text-left">
+              <p className="text-gray-700">
+                <span className="font-bold">Cuisines:</span> {restaurant.Cuisines || restaurant.cuisines}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-bold">Rating:</span> {restaurant.Rating || restaurant.rating}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-bold">Address:</span> {restaurant.Address || restaurant.address}
+              </p>
             </div>
 
           </li>
