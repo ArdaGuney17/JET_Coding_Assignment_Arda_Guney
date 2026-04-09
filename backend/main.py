@@ -41,13 +41,13 @@ class JET_API_Client:
             # Extract only the necessary details name, cuisines, rating and address for each restaurant
             # By adding empty dictionaries {} and empty lists [] as the fallback values, we prevent the API from returning an error if the data is not found
             
-            # List of marketing tags we want to filter out to focus on actual restaurant data 
+            # List of marketing tags to filter out to focus on actual cuisine data 
             excluded_tags = {"Deals", "Freebies", "Offers", "Collect stamps"}
             
             for restaurant in restaurants_list:
                 name = restaurant.get("name")
                 
-                # Extract and filter cuisines
+                # Extract and filter out the marketing tags from the cuisines list
                 raw_cuisines = restaurant.get("cuisines", [])
                 filtered_cuisine_names = [
                     cuisine.get("name") 
@@ -61,13 +61,13 @@ class JET_API_Client:
                 raw_address = restaurant.get("address", {})
                 # Extract the human readable address details city, firstline and postcode 
                 # excluding the coordinates from the raw data and format them into a single string
-                clean_adress = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}"
+                address = f"{raw_address.get('city')}, {raw_address.get('firstLine')}, {raw_address.get('postalCode')}"
                 # Append the clean dictionary that has the necessary data to our final list
                 target_data.append({
                     "name": name,
                     "cuisines": cuisines,
                     "rating": rating,
-                    "address": clean_adress
+                    "address": address
                 })
             # Return the filtered list with the necessary data
             return target_data
