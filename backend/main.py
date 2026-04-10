@@ -45,7 +45,22 @@ class JET_API_Client:
             excluded_tags = {"Deals", "Freebies", "Offers", "Collect stamps"}
             
             for restaurant in restaurants_list:
-                name = restaurant.get("name")
+                # Cleaning the name of the restaurants from address details
+                try:
+                    # Forcing whatever is in the 'name' field to be a string
+                    # If it's None, it becomes an empty string
+                    raw_name = str(restaurant.get("name") or "")
+
+                    if raw_name:
+                        # Treat ' - ' and ',' as separators; take the first part and trim extra spaces
+                        name = raw_name.replace(' - ', ',').split(',')[0].strip()
+                    else:
+                        name = "Unknown Restaurant"
+
+                except Exception as e:
+                    # If anything goes wrong with one restaurant, don't crash the server!
+                    print(f"Error cleaning name: {e}")
+                    name = "New Restaurant" # Fallback name
                 
                 # Extract and filter out the marketing tags from the cuisines list
                 raw_cuisines = restaurant.get("cuisines", [])
