@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import your custom class from the services file
-from services import JET_API_Client
+from services import RestaurantService, JETDataFetcher
 
 # Initialize the FastAPI application
 JET_app = FastAPI()
@@ -24,17 +24,17 @@ JET_app.add_middleware(
 # Define the root endpoint to extract and filter restaurant data
 @JET_app.get("/")
 def get_restaurant_data():
-    # The route is now clean and strictly handles the request/response lifecycle
-    JET_client = JET_API_Client("CT12EH")
-    # Return the first 10 restaurants from the filtered list with the necessary data
-    return JET_client.extract_restaurants_data(10)
+    # Instantiate the high-level service orchestrator
+    service = RestaurantService("CT12EH")
+    # Return the first 10 restaurants, now as a list of validated Restaurant objects
+    return service.get_top_rated_restaurants(10)
 
 # --- TEMPORARY ROUTE TO SEE RAW DATA ---
 @JET_app.get("/raw")
 def get_raw_data():
-    # This fetches the data but skips your cleaning functions
-    JET_client = JET_API_Client("CT12EH")
-    raw_data = JET_client.get_restaurants()
+    # Use the specialized Fetcher class for raw data access
+    fetcher = JETDataFetcher("CT12EH")
+    raw_data = fetcher.fetch_raw_restaurants()
     
     # Return just the first 10 raw restaurant objects
     if raw_data:
