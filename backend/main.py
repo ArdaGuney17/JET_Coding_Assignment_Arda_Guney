@@ -4,38 +4,31 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import our modular OOP components
+# Import our modular OOP components and config
 from services import RestaurantService, JETDataFetcher, RestaurantTransformer
-
-# --- CONFIGURATION ---
-# Centralized settings for easy maintenance
-DEFAULT_POSTCODE = "CT12EH"
+from config import AppConfig
 
 # --- THE DEPENDENCY PIPELINE (PIPELINE FACTORY) ---
-# Each function represents a stage in the data processing pipeline.
-# This follows the Dependency Inversion Principle (DIP).
+# This architecture implements 'Dependency Inversion' by injecting Config into stages.
 
 def get_data_fetcher() -> JETDataFetcher:
-    """Stage 1: The Inlet. Handles raw API communication."""
-    return JETDataFetcher(DEFAULT_POSTCODE)
+    """Stage 1: The Inlet. Configured via AppConfig."""
+    return JETDataFetcher(AppConfig.DEFAULT_POSTCODE, AppConfig.API_HEADERS)
 
 def get_restaurant_transformer() -> RestaurantTransformer:
-    """Stage 2: The Filter. Handles data cleaning and business logic."""
-    return RestaurantTransformer()
+    """Stage 2: The Filter. Configured via AppConfig."""
+    return RestaurantTransformer(AppConfig.EXCLUDED_TAGS)
 
 def get_restaurant_service(
     fetcher: JETDataFetcher = Depends(get_data_fetcher),
     transformer: RestaurantTransformer = Depends(get_restaurant_transformer)
 ) -> RestaurantService:
-    """Stage 3: The Pump (The Assembly). Combines the Inlet and Filter into a Service."""
+    """Stage 3: The Assembly Factory. Injects Stage 1 & 2 into the Service."""
     return RestaurantService(fetcher, transformer)
 
 
 # --- APP INITIALIZATION ---
-JET_app = FastAPI(
-    title="JET Restaurant Discovery API",
-    description="A professional, pipeline-based discovery service for Just Eat restaurants."
-)
+JET_app = FastAPI(title="JET Restaurant Discovery API")
 
 JET_app.add_middleware(
     CORSMiddleware,
@@ -45,12 +38,9 @@ JET_app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- THE MAIN ENDPOINT ---
+# --- ROUTES ---
 
 @JET_app.get("/")
 def get_restaurants(service: RestaurantService = Depends(get_restaurant_service)):
-    """
-    Returns the top 10 rated restaurants for the configured postcode.
-    The 'service' is automatically assembled by the Pipeline Factory above.
-    """
+    """The Root endpoint: Strictly returns the pipeline's final product."""
     return service.get_top_rated_restaurants(10)

@@ -10,12 +10,9 @@ class JETDataFetcher:
     Dedicated class for network interaction.
     Its only responsibility is to talk to the Just Eat API.
     """
-    def __init__(self, postcode: str):
+    def __init__(self, postcode: str, headers: dict):
         self.base_url = f"https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/{postcode}"
-        self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
-            "X-Project-Name": "Arda-JET-Technical-Assessment"
-        }
+        self.headers = headers
 
     def fetch_raw_restaurants(self):
         """Perform the network request and return raw JSON."""
@@ -35,8 +32,8 @@ class RestaurantTransformer:
     Dedicated class for data cleaning and object creation.
     It takes raw API dicts and transforms them into clean Restaurant objects.
     """
-    def __init__(self):
-        self.excluded_tags = {"Deals", "Freebies", "Offers", "Collect stamps"}
+    def __init__(self, excluded_tags: set):
+        self.excluded_tags = excluded_tags
 
     def transform_to_model(self, raw_item: dict) -> Restaurant:
         """Converts a single raw restaurant dictionary into a Restaurant model."""
