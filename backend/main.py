@@ -4,26 +4,25 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import our modular OOP components and config
+# Import our modular packages (Enterprise Package Structure)
 from services import RestaurantService, JETDataFetcher, RestaurantTransformer
 from config import AppConfig
 
-# --- THE DEPENDENCY PIPELINE (PIPELINE FACTORY) ---
-# This architecture implements 'Dependency Inversion' by injecting Config into stages.
+# --- THE DEPENDENCY PIPELINE ---
 
 def get_data_fetcher() -> JETDataFetcher:
-    """Stage 1: The Inlet. Configured via AppConfig."""
-    return JETDataFetcher(AppConfig.DEFAULT_POSTCODE, AppConfig.API_HEADERS)
+    """Stage 1: The Inlet. Configured via APIConfig."""
+    return JETDataFetcher(AppConfig.DEFAULT_POSTCODE, AppConfig.HEADERS)
 
 def get_restaurant_transformer() -> RestaurantTransformer:
-    """Stage 2: The Filter. Configured via AppConfig."""
+    """Stage 2: The Filter. Configured via LogicConfig."""
     return RestaurantTransformer(AppConfig.EXCLUDED_TAGS)
 
 def get_restaurant_service(
     fetcher: JETDataFetcher = Depends(get_data_fetcher),
     transformer: RestaurantTransformer = Depends(get_restaurant_transformer)
 ) -> RestaurantService:
-    """Stage 3: The Assembly Factory. Injects Stage 1 & 2 into the Service."""
+    """Stage 3: The Assembly Factory. Injects Inlet and Filter into the Pump."""
     return RestaurantService(fetcher, transformer)
 
 

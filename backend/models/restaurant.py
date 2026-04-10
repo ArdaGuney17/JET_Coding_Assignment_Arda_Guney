@@ -3,8 +3,8 @@ from typing import List, Optional
 
 class Restaurant(BaseModel):
     """
-    Data model representing a cleaned Restaurant entity.
-    Using Pydantic ensures type safety and easy serialization.
+    The Data Model for a Restaurant.
+    Defines the exact structure of our cleaned data.
     """
     name: str
     cuisines: str
@@ -13,6 +13,3 @@ class Restaurant(BaseModel):
     tags: List[str]
     lat: Optional[float]
     lng: Optional[float]
-
-    class Config:
-        from_attributes = True
