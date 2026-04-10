@@ -85,15 +85,29 @@ class JET_API_Client:
             cuisines, tags = self._extract_cuisines_and_tags(restaurant.get("cuisines", []))
             # Extract the "starRating" value from the "rating" dictionary in the raw data to get numeric rating
             rating = restaurant.get("rating", {}).get("starRating")
-            address = self._format_address(restaurant.get("address", {}))
+            # Extract the address details from the raw data
+            raw_address = restaurant.get("address", {})
+            # Format the address details other than coordinates into a single string
+            address = self._format_address(raw_address)
+            # Extract the coordinates from the raw data
+            coordinates = raw_address.get("location", {}).get("coordinates", [])
             
-            # Append the clean dictionary that has the necessary data to our final list
+            # Safety check, only extract if both lng and lat exist
+            if len(coordinates) == 2:
+                lng = coordinates[0] # 1.091004
+                lat = coordinates[1] # 51.286542
+            else:
+                lat = None
+                lng = None
+
             target_data.append({
                 "name": name,
                 "cuisines": cuisines,
                 "rating": rating,
                 "address": address,
-                "tags": tags
+                "tags": tags,
+                "lat": lat,
+                "lng": lng
             })
 
         # Sort the data by rating, highest to lowest. 
