@@ -83,5 +83,9 @@ class JET_API_Client:
                 "rating": rating,
                 "address": address
             })
+
+        # Sort the data by rating, highest to lowest. 
+        # We use 'or 0' just in case a restaurant is missing a rating to prevent a crash.
+        target_data.sort(key=lambda x: x.get('rating') or 0, reverse=True)
             
         return target_data
