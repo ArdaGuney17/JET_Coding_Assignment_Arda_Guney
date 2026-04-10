@@ -14,6 +14,8 @@ class JET_API_Client:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
             "X-Project-Name": "Arda-JET-Technical-Assessment"
         }
+        # Re-added the excluded tags so the tags method has access to it!
+        self.excluded_tags = {"Deals", "Freebies", "Offers", "Collect stamps"}
     
     # Method to fetch raw data from the Just Eat API
     def get_restaurants(self):
@@ -40,14 +42,23 @@ class JET_API_Client:
             print(f"Error cleaning name: {e}")
             return "New Restaurant"
 
-    # Extract and filter out the marketing tags (Deals, Freebies, Offers, Collect stamps) from the cuisines list
-    def _filter_cuisines(self, raw_cuisines: list) -> str:
-        filtered_cuisine_names = [
-            cuisine.get("name") 
-            for cuisine in raw_cuisines 
-            if cuisine.get("name") and cuisine.get("name") not in {"Deals", "Freebies", "Offers", "Collect stamps"}
-        ]
-        return ", ".join(filtered_cuisine_names)
+    def _extract_cuisines_and_tags(self, raw_cuisines: list) -> tuple:
+        """Helper method to separate actual cuisines from marketing tags."""
+        actual_cuisines = []
+        marketing_tags = []
+        
+        for cuisine in raw_cuisines:
+            name = cuisine.get("name")
+            if name:
+                # If it's a marketing tag, put it in the tags list
+                if name in self.excluded_tags:
+                    marketing_tags.append(name)
+                # Otherwise, it's a real food cuisine
+                else:
+                    actual_cuisines.append(name)
+                    
+        # Return cuisines as a string, and tags as a list
+        return ", ".join(actual_cuisines), marketing_tags
 
     # Extract the human readable address details city, firstline and postcode 
     # excluding the coordinates from the raw data and format them into a single string
@@ -71,7 +82,7 @@ class JET_API_Client:
         
         for restaurant in restaurants_list:
             name = self._clean_name(restaurant.get("name"))
-            cuisines = self._filter_cuisines(restaurant.get("cuisines", []))
+            cuisines, tags = self._extract_cuisines_and_tags(restaurant.get("cuisines", []))
             # Extract the "starRating" value from the "rating" dictionary in the raw data to get numeric rating
             rating = restaurant.get("rating", {}).get("starRating")
             address = self._format_address(restaurant.get("address", {}))
@@ -81,7 +92,8 @@ class JET_API_Client:
                 "name": name,
                 "cuisines": cuisines,
                 "rating": rating,
-                "address": address
+                "address": address,
+                "tags": tags
             })
 
         # Sort the data by rating, highest to lowest. 

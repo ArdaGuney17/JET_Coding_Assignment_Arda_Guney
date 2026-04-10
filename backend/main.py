@@ -28,3 +28,15 @@ def get_restaurant_data():
     JET_client = JET_API_Client("CT12EH")
     # Return the first 10 restaurants from the filtered list with the necessary data
     return JET_client.extract_restaurants_data(10)
+
+# --- TEMPORARY ROUTE TO SEE RAW DATA ---
+@JET_app.get("/raw")
+def get_raw_data():
+    # This fetches the data but skips your cleaning functions
+    JET_client = JET_API_Client("CT12EH")
+    raw_data = JET_client.get_restaurants()
+    
+    # Return just the first 10 raw restaurant objects
+    if raw_data:
+        return raw_data.get("restaurants", [])[:10]
+    return {"error": "Could not fetch data"}
