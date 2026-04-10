@@ -9,24 +9,25 @@
  */
 export function Header({ logo }) {
     return (
-
-        <div className="sticky top-0 z-50 bg-white pb-4">
-            <header className="bg-[#FF8000] py-4 shadow-sm">
-                <div className="max-w-[1000px] mx-auto px-5">
+        <div className="bg-[#fafafa] pb-10 border-b border-gray-100">
+            {/* Only the thin Logo Navigation stays sticky to preserve screen space */}
+            <header className="sticky top-0 z-50 bg-[#FF8000] py-3 shadow-md">
+                <div className="px-5 md:px-8">
                     <img
                         src={logo}
                         alt="Just Eat Takeaway Logo"
-                        className="h-28 mx-auto object-contain"
+                        className="h-10 md:h-12 object-contain"
                     />
                 </div>
             </header>
 
-            <div className="max-w-[1000px] mx-auto px-5 mt-6">
-                <h1 className="text-[#FF8000] text-2xl md:text-4xl font-bold text-center">
-                    Complete at Home Coding Assignment
+            {/* Title section — left-anchored to match the logo */}
+            <div className="px-5 md:px-8 mt-8 mb-2">
+                <h1 className="text-gray-900 text-2xl md:text-4xl font-extrabold tracking-tight mb-2">
+                    Complete at Home <span className="text-[#FF8000]">Coding Assignment</span>
                 </h1>
-                <p className="text-[#FF8000] text-center opacity-90">
-                    Displaying the details of the first 10 restaurants fetched from the Just Eat Takeaway API
+                <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl">
+                    Displaying the details of the first 10 restaurants dynamically fetched from the Just Eat Takeaway API.
                 </p>
             </div>
         </div>
@@ -43,9 +44,10 @@ export function Header({ logo }) {
  */
 export function RestaurantList({ children }) {
     return (
-        <main className="max-w-[1000px] mx-auto p-5 pt-4">
-            <div className="bg-[#FF8000] max-h-[calc(100vh-320px)] overflow-y-auto pr-4 border-2 border-gray-100 rounded-2xl p-6 shadow-md">
-                <ul className="list-none p-0 space-y-4">
+        <main className="px-5 md:px-8 py-8 min-h-screen">
+            {/* Orange-framed container to give the list visual structure */}
+            <div className="border-2 border-[#FF8000] rounded-3xl p-5 md:p-8 shadow-lg bg-[#FF8000]">
+                <ul className="list-none p-0 space-y-6 md:space-y-8">
                     {children}
                 </ul>
             </div>
@@ -154,7 +156,7 @@ export function RestaurantCard({ name, cuisines, rating, address, tags = [], lat
                 </div>
 
                 {/* MiniMap component perfectly aligned flush to the right */}
-                <div className="w-full md:w-[250px] lg:w-[320px] shrink-0">
+                <div className="w-full md:w-[280px] lg:w-[380px] xl:w-[450px] shrink-0">
                     <MiniMap lat={lat} lng={lng} />
                 </div>
             </div>
