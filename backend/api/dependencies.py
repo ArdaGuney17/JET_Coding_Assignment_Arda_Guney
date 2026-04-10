@@ -7,7 +7,11 @@ from config import AppConfig
 
 def get_data_fetcher() -> JETDataFetcher:
     """Stage 1: The Inlet. Configured via APIConfig."""
-    return JETDataFetcher(AppConfig.DEFAULT_POSTCODE, AppConfig.HEADERS)
+    return JETDataFetcher(
+        AppConfig.DISCOVERY_API_URL, 
+        AppConfig.DEFAULT_POSTCODE, 
+        AppConfig.HEADERS
+    )
 
 def get_restaurant_transformer() -> RestaurantTransformer:
     """Stage 2: The Filter. Configured via LogicConfig."""
