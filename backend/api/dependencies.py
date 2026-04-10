@@ -3,7 +3,6 @@ from services import RestaurantService, JETDataFetcher, RestaurantTransformer
 from config import AppConfig
 
 # --- THE DEPENDENCY PIPELINE ---
-# This layer decouples the "How" of building a service from the "Where" it is used.
 
 def get_data_fetcher() -> JETDataFetcher:
     """Stage 1: The Inlet. Configured via APIConfig."""
