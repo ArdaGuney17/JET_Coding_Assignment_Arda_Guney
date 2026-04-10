@@ -93,12 +93,13 @@ class RestaurantTransformer:
 
 class RestaurantService:
     """
-    The Master Orchestrator.
+    The Master Orchestrator (The Pump).
     It coordinates the Fetcher and the Transformer to provide the final data service.
+    Follows 'Dependency Inversion' by receiving its dependencies via injection.
     """
-    def __init__(self, postcode: str):
-        self.fetcher = JETDataFetcher(postcode)
-        self.transformer = RestaurantTransformer()
+    def __init__(self, fetcher: JETDataFetcher, transformer: RestaurantTransformer):
+        self.fetcher = fetcher
+        self.transformer = transformer
 
     def get_top_rated_restaurants(self, limit: int = 10):
         """Fetch, transform, sort, and return a list of Restaurant objects."""

@@ -1,18 +1,42 @@
 # Setup requirement: run 'pip install fastapi uvicorn requests' in your terminal
 # Or install via the requirements file: 'pip install -r requirements.txt'
 
-# Import the necessary libraries to build the API and fetch data
-from fastapi import FastAPI
-# Import the CORSMiddleware to allow React app to talk to Python
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import your custom class from the services file
-from services import RestaurantService, JETDataFetcher
+# Import our modular OOP components
+from services import RestaurantService, JETDataFetcher, RestaurantTransformer
 
-# Initialize the FastAPI application
-JET_app = FastAPI()
+# --- CONFIGURATION ---
+# Centralized settings for easy maintenance
+DEFAULT_POSTCODE = "CT12EH"
 
-# Allow React app to talk to Python
+# --- THE DEPENDENCY PIPELINE (PIPELINE FACTORY) ---
+# Each function represents a stage in the data processing pipeline.
+# This follows the Dependency Inversion Principle (DIP).
+
+def get_data_fetcher() -> JETDataFetcher:
+    """Stage 1: The Inlet. Handles raw API communication."""
+    return JETDataFetcher(DEFAULT_POSTCODE)
+
+def get_restaurant_transformer() -> RestaurantTransformer:
+    """Stage 2: The Filter. Handles data cleaning and business logic."""
+    return RestaurantTransformer()
+
+def get_restaurant_service(
+    fetcher: JETDataFetcher = Depends(get_data_fetcher),
+    transformer: RestaurantTransformer = Depends(get_restaurant_transformer)
+) -> RestaurantService:
+    """Stage 3: The Pump (The Assembly). Combines the Inlet and Filter into a Service."""
+    return RestaurantService(fetcher, transformer)
+
+
+# --- APP INITIALIZATION ---
+JET_app = FastAPI(
+    title="JET Restaurant Discovery API",
+    description="A professional, pipeline-based discovery service for Just Eat restaurants."
+)
+
 JET_app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"], 
@@ -21,22 +45,12 @@ JET_app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define the root endpoint to extract and filter restaurant data
-@JET_app.get("/")
-def get_restaurant_data():
-    # Instantiate the high-level service orchestrator
-    service = RestaurantService("CT12EH")
-    # Return the first 10 restaurants, now as a list of validated Restaurant objects
-    return service.get_top_rated_restaurants(10)
+# --- THE MAIN ENDPOINT ---
 
-# --- TEMPORARY ROUTE TO SEE RAW DATA ---
-@JET_app.get("/raw")
-def get_raw_data():
-    # Use the specialized Fetcher class for raw data access
-    fetcher = JETDataFetcher("CT12EH")
-    raw_data = fetcher.fetch_raw_restaurants()
-    
-    # Return just the first 10 raw restaurant objects
-    if raw_data:
-        return raw_data.get("restaurants", [])[:10]
-    return {"error": "Could not fetch data"}
+@JET_app.get("/")
+def get_restaurants(service: RestaurantService = Depends(get_restaurant_service)):
+    """
+    Returns the top 10 rated restaurants for the configured postcode.
+    The 'service' is automatically assembled by the Pipeline Factory above.
+    """
+    return service.get_top_rated_restaurants(10)
