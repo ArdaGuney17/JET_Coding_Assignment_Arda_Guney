@@ -1,4 +1,5 @@
 from models import Restaurant
+from config import AppConfig
 
 class RestaurantTransformer:
     """
@@ -10,14 +11,14 @@ class RestaurantTransformer:
 
     def transform_to_model(self, raw_item: dict) -> Restaurant:
         """Converts a single raw restaurant dictionary into a Restaurant model."""
-        name = self._clean_name(raw_item.get("name"))
-        cuisines, tags = self._extract_cuisines_and_tags(raw_item.get("cuisines", []))
-        rating = raw_item.get("rating", {}).get("starRating")
+        name = self._clean_name(raw_item.get(AppConfig.NAME))
+        cuisines, tags = self._extract_cuisines_and_tags(raw_item.get(AppConfig.CUISINES, []))
+        rating = raw_item.get(AppConfig.RATING, {}).get(AppConfig.STAR_RATING)
         
-        raw_address = raw_item.get("address", {})
+        raw_address = raw_item.get(AppConfig.ADDRESS, {})
         address = self._format_address(raw_address)
         
-        coordinates = raw_address.get("location", {}).get("coordinates", [])
+        coordinates = raw_address.get(AppConfig.LOCATION, {}).get(AppConfig.COORDINATES, [])
         lng, lat = (coordinates[0], coordinates[1]) if len(coordinates) == 2 else (None, None)
 
         return Restaurant(
@@ -43,7 +44,7 @@ class RestaurantTransformer:
         actual_cuisines = []
         marketing_tags = []
         for cuisine in raw_cuisines:
-            name = cuisine.get("name")
+            name = cuisine.get(AppConfig.NAME)
             if name:
                 if name in self.excluded_tags:
                     marketing_tags.append(name)
@@ -52,7 +53,7 @@ class RestaurantTransformer:
         return ", ".join(actual_cuisines), marketing_tags
 
     def _format_address(self, raw_address: dict) -> str:
-        city = raw_address.get('city', '')
-        first_line = raw_address.get('firstLine', '')
-        postal_code = raw_address.get('postalCode', '')
+        city = raw_address.get(AppConfig.CITY, '')
+        first_line = raw_address.get(AppConfig.FIRST_LINE, '')
+        postal_code = raw_address.get(AppConfig.POSTAL_CODE, '')
         return f"{city}, {first_line}, {postal_code}".strip(", ")

@@ -5,7 +5,7 @@ from config import AppConfig
 # --- THE DEPENDENCY PIPELINE ---
 
 def get_data_fetcher() -> JETDataFetcher:
-    """Stage 1: The Inlet. Configured via APIConfig."""
+    """Stage 1: The Inlet. Configured via FetcherConfig."""
     return JETDataFetcher(
         AppConfig.DISCOVERY_API_URL, 
         AppConfig.DEFAULT_POSTCODE, 
@@ -13,7 +13,7 @@ def get_data_fetcher() -> JETDataFetcher:
     )
 
 def get_restaurant_transformer() -> RestaurantTransformer:
-    """Stage 2: The Filter. Configured via LogicConfig."""
+    """Stage 2: The Filter. Configured via TransformerConfig."""
     return RestaurantTransformer(AppConfig.EXCLUDED_TAGS)
 
 def get_restaurant_service(

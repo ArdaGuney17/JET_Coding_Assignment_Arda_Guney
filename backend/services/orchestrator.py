@@ -1,5 +1,6 @@
 from .fetcher import JETDataFetcher
 from .transformer import RestaurantTransformer
+from config import AppConfig
 
 class RestaurantService:
     """
@@ -11,13 +12,13 @@ class RestaurantService:
         self.fetcher = fetcher
         self.transformer = transformer
 
-    def get_top_rated_restaurants(self, limit: int = 10):
+    def get_top_rated_restaurants(self, limit: int = AppConfig.DEFAULT_LIMIT):
         """Fetch, transform, sort, and return a list of Restaurant objects."""
         raw_data = self.fetcher.fetch_raw_restaurants()
-        if not raw_data or "restaurants" not in raw_data:
+        if not raw_data or AppConfig.RESTAURANTS not in raw_data:
             return []
 
-        raw_list = raw_data.get("restaurants", [])[:limit]
+        raw_list = raw_data.get(AppConfig.RESTAURANTS, [])[:limit]
         
         # Transform raw dicts into Restaurant objects
         restaurants = [self.transformer.transform_to_model(item) for item in raw_list]

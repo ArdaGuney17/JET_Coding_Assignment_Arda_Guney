@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from config import AppConfig
 from .middleware import setup_middleware
 from api.routes import router as api_router
 
@@ -8,8 +9,8 @@ def create_app() -> FastAPI:
     Manufactures a fully configured FastAPI application instance.
     """
     app = FastAPI(
-        title="JET Restaurant Discovery API",
-        description="A God-Tier, fully modular discovery service following the highest architectural standards."
+        title=AppConfig.APP_TITLE,
+        description=AppConfig.APP_DESCRIPTION
     )
 
     # 1. Setup Middleware

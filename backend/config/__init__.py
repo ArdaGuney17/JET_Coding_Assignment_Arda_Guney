@@ -1,7 +1,10 @@
-from .api_config import APIConfig
-from .logic_config import LogicConfig
+from .api import APIConfig
+from .services import ServicesConfig
+from .core import CoreConfig
 
-# Export a unified Config object for convenience
-class AppConfig(APIConfig, LogicConfig):
-    """Unified configuration for the entire application."""
+class AppConfig(APIConfig, ServicesConfig, CoreConfig):
+    """
+    Unified configuration for the entire application.
+    Aggregates settings from api/, services/, and core/ sub-packages.
+    """
     pass
