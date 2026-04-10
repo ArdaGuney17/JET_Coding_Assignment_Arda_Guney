@@ -1,8 +1,8 @@
 // Import the Just Eat Takeaway logo from the assets folder
 import jetLogo from './assets/jet-logo-white.png'
 // Import the necessary components and hooks from their new dedicated directories
-import { Header } from './components/Header'
-import { MainView } from './components/MainView'
+import { Header } from './components/layout/Header'
+import { MainView } from './components/layout/MainView'
 import { useRestaurants } from './hooks/useRestaurants'
 
 /**

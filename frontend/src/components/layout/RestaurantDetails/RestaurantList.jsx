@@ -1,5 +1,5 @@
 /**
- * RestaurantList Component: A branded frame for the restaurant cards.
+ * RestaurantList Component: A branded frame in the JET Orange color for the restaurant cards.
  */
 export function RestaurantList({ children }) {
     return (

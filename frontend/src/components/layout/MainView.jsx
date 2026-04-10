@@ -1,5 +1,5 @@
-import { RestaurantList } from './RestaurantList';
-import { RestaurantCard } from './RestaurantCard';
+import { RestaurantList } from './RestaurantDetails/RestaurantList';
+import { RestaurantCard } from './RestaurantDetails/RestaurantCard/RestaurantCard';
 
 /**
  * LoadingState Component: Displays a professional loading spinner.
