@@ -1,6 +1,31 @@
 # Import the requests library to handle HTTP requests
 import requests
 
+# --- OBJECT 1: DATA FETCHER ---
+
+class JETDataFetcher:
+    """
+    Dedicated class for network interaction.
+    Its only responsibility is to talk to the Just Eat API.
+    """
+    def __init__(self, postcode: str):
+        self.base_url = f"https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/{postcode}"
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
+            "X-Project-Name": "Arda-JET-Technical-Assessment"
+        }
+
+    def fetch_raw_restaurants(self):
+        """Perform the network request and return raw JSON."""
+        try:
+            response = requests.get(self.base_url, headers=self.headers)
+            response.raise_for_status() # Raise error for bad status codes
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Network error: {e}")
+            return None
+
+
 # --- JET API Client Class ---
 
 # Declared a class to handle the Just Eat API requests and data extraction process in a more flexible and scalable way
