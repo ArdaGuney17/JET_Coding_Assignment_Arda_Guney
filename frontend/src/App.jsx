@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-// 1. Import the logo from your assets folder
+// Import the Just Eat Takeaway logo from the assets folder
 import jetLogo from './assets/jet-logo-white.png'
+// Import the necessary components from the components.jsx file
+import { Header, RestaurantList, RestaurantCard } from './components'
 
 function App() {
   // Initialize state to hold the fetched restaurant array.
@@ -17,78 +19,24 @@ function App() {
       .then(data => setRestaurants(data))
       // Catch and display any network or parsing errors
       .catch(error => console.error("Error fetching data:", error))
+    // The empty array [] ensures this effect runs only once after the initial render
   }, [])
 
   return (
-    /* max-width 800px, centered, with padding and making the background color JET orange */
-    <div className="min-h-screen bg-[#ff000] font-sans">
-
-      {/* This inner div is the 'Content Frame'.
-       - max-w-[800px]: Keeps the list from getting too wide on big monitors.
-       - mx-auto: Centers this frame horizontally.
-      */}
-      {/* Fetched data connects to the UI here
-          React gets the restaurants list fetched from the API and creates a separate
-          list item for every instance in the list to display all the restaurants' details.
-      */}
-      <div className="sticky top-0 z-50 bg-white pb-4">
-
-        <header className="bg-[#FF8000] py-4 shadow-sm">
-          {/* Added official JET logo to the header*/}
-          <div className="max-w-[1000px] mx-auto px-5">
-            <img
-              src={jetLogo}
-              alt="Just Eat Takeaway Logo"
-              className="h-28 mx-auto object-contain"
-            />
-          </div>
-        </header>
-
-        <div className="max-w-[1000px] mx-auto px-5 mt-6">
-
-          <h1 className="text-[#FF8000] text-2xl md:text-4xl font-bold text-center">
-            Complete at Home Coding Assignment
-          </h1>
-
-          <p className="text-[#FF8000] text-center  opacity-90">
-            Displaying the details of the first 10 restaurants fetched from the Just Eat Takeaway API
-          </p>
-
-        </div>
-      </div>
-      <main className="max-w-[1000px] mx-auto p-5 pt-8">
-        {/* Display the restaurant details in a list format in a scrollable div */}
-        <div className="bg-[#FF8000] max-h-[calc(100vh-320px)] overflow-y-auto pr-4 border-2 border-gray-100 rounded-2xl p-6 shadow-md">
-          <ul className="list-none p-0 space-y-4">
-            {restaurants.map((restaurant, index) => (
-              /* Card Styling adding border, rounded corners, padding, shadow, and hover effect */
-              <li key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
-                {/* Display the restaurant name hierarchically above the other details by h3 tag */}
-                {/* Use the official JET Orange color for restaurant names */}
-                <h3 className="text-2xl font-bold text-[#FF8000] mb-3 text-left">
-                  {restaurant.Name || restaurant.name}
-                </h3>
-                <div className="space-y-1 text-left">
-                  {/* Display the cuisines making the label bold*/}
-                  <p className="text-gray-700">
-                    <span className="font-bold">Cuisines:</span> {restaurant.Cuisines || restaurant.cuisines}
-                  </p>
-                  {/* Display the rating making the label bold*/}
-                  <p className="text-gray-700">
-                    <span className="font-bold">Rating:</span> {restaurant.Rating || restaurant.rating}
-                  </p>
-                  {/* Display the address by making the label bold*/}
-                  <p className="text-gray-700">
-                    <span className="font-bold">Address:</span> {restaurant.Address || restaurant.address}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </main>
+    // The main container for the entire application
+    <div className="min-h-screen bg-white font-sans">
+      {/* Header Component displays the brand logo and assignment titles. */}
+      <Header logo={jetLogo} />
+      {/* RestaurantList Component is a scrollable container that maps the 
+      restaurant data into individual cards. */}
+      <RestaurantList>
+        {/* Iterate over the restaurants array and render a RestaurantCard Component for each */}
+        {restaurants.map((res, index) => (
+          <RestaurantCard key={index} {...res} />
+        ))}
+      </RestaurantList>
     </div>
   )
 }
 
-export default App  
+export default App
