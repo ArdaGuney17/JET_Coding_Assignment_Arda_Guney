@@ -7,7 +7,6 @@ describe('MiniMap Component Resilience', () => {
         render(<MiniMap lat={51.5074} lng={-0.1278} />);
         
         // The iframe for Google Maps should be present (via MiniMapFrame)
-        // Note: Using getByTitle since the iframe has a title "Restaurant Location Map"
         expect(screen.getByTitle(/Restaurant Location Map/i)).toBeInTheDocument();
     });
 

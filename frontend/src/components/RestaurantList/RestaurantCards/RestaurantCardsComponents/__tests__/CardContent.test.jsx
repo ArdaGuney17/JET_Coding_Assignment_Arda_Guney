@@ -13,7 +13,6 @@ describe('Card Content Resilience', () => {
         it('handles missing tags safely', () => {
             render(<CardHeader name="Generic Food" tags={null} />);
             expect(screen.getByText(/Generic Food/i)).toBeInTheDocument();
-            // Should not crash, and no tags container should be rendered
         });
     });
 
