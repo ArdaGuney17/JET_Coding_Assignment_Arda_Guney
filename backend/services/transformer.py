@@ -35,10 +35,13 @@ class RestaurantTransformer:
         try:
             name_str = str(raw_name or "")
             if name_str:
-                return name_str.replace(' - ', ',').split(',')[0].strip()
-            return "Unknown Restaurant"
+                # Normalize all separators into the primary delimiter
+                for sep in AppConfig.NAME_SEPARATORS:
+                    name_str = name_str.replace(sep, AppConfig.PRIMARY_DELIMITER)
+                return name_str.split(AppConfig.PRIMARY_DELIMITER)[0].strip()
+            return AppConfig.FALLBACK_UNKNOWN_NAME
         except Exception:
-            return "New Restaurant"
+            return AppConfig.FALLBACK_ERROR_NAME
 
     def _extract_cuisines_and_tags(self, raw_cuisines: list) -> tuple:
         actual_cuisines = []

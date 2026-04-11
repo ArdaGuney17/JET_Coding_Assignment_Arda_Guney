@@ -13,3 +13,9 @@ class TransformerConfig:
     POSTAL_CODE = "postalCode"
     LOCATION = "location"
     COORDINATES = "coordinates"
+
+    # Data Cleaning & Fallbacks
+    NAME_SEPARATORS = [' - ', '|']
+    PRIMARY_DELIMITER = ','
+    FALLBACK_UNKNOWN_NAME = "Unknown Restaurant"
+    FALLBACK_ERROR_NAME = "New Restaurant"
