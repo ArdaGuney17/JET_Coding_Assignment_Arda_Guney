@@ -2,7 +2,9 @@
  * API Service for fetching restaurant data.
  */
 
-const API_URL = 'http://localhost:8000/';
+import { restaurantServiceConfig } from '../config/restaurantServiceConfig.js';
+
+const API_URL = restaurantServiceConfig.BACKEND_API_BASE;
 
 export async function fetchRestaurants() {
   const response = await fetch(API_URL);

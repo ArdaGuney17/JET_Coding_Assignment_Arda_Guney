@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AppConfig } from '../../../config/appConfig';
+import { MiniMapConfig } from '../../../config/MiniMapConfig';
 
 /**
  * MapLoading Sub-Component: Displays the branded spinner while the map loads.
@@ -38,7 +38,7 @@ function MapFrame({ lat, lng, isLoading, onMapLoad }) {
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
-            src={`${AppConfig.MAPS_BASE_URL}?q=${lat},${lng}&z=${AppConfig.MAPS_DEFAULT_ZOOM}&output=embed`}
+            src={`${MiniMapConfig.MAPS_BASE_URL}?q=${lat},${lng}&z=${MiniMapConfig.MAPS_DEFAULT_ZOOM}&output=embed`}
             onLoad={onMapLoad}
             className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
         ></iframe>
