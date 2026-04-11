@@ -1,10 +1,9 @@
-/**
- * Tag Sub-Component: Small branded badge for promotions or status.
- */
-export function Tag({ 
-    text, 
-    color = "bg-gradient-to-r from-[#FF8000] to-orange-400", 
-    textColor = "text-white" 
+export function Tag({
+    text,
+    color = "bg-gradient-to-r from-[#FF8000] to-orange-400",
+    textColor = "text-white",
+    textTransform = "uppercase",          // Parameterized: defaults to all-caps
+    borderStyle = "border border-white/20" // Parameterized: defaults to current frame
 }) {
     const getIcon = (tagStr) => {
         const lower = tagStr.toLowerCase();
@@ -12,17 +11,16 @@ export function Tag({
         if (lower.includes('freebies')) return '🎁';
         if (lower.includes('deals') || lower.includes('offers')) return '🔥';
         if (lower.includes('stamps')) return '🎟️';
-        return '✨';
+        return null;
     };
 
     return (
         <span className={`
             inline-flex items-center gap-1.5 
-            ${color} ${textColor} 
+            ${color} ${textColor} ${textTransform} ${borderStyle}
             text-[11px] px-3.5 py-1.5 
             rounded-xl font-black shadow-md 
-            uppercase tracking-widest 
-            border border-white/20
+            tracking-widest 
             transition-all duration-300 hover:scale-105
         `}>
             <span className="text-sm">{getIcon(text)}</span>

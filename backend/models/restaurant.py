@@ -11,5 +11,6 @@ class Restaurant(BaseModel):
     rating: Optional[float]
     address: str
     tags: List[str]
+    specialties: List[str]
     lat: Optional[float]
     lng: Optional[float]

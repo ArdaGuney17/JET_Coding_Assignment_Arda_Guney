@@ -1,8 +1,10 @@
+import { Tag } from '../SharedComponents/Tag';
+
 /* Icons needed for cuisines, rating, and address */
 const ICONS = {
     cuisines: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-0.5 text-[#FF8000] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" />
         </svg>
     ),
     rating: (
@@ -25,7 +27,9 @@ function DetailRow({ type, children }) {
     return (
         <div className="flex items-start gap-2.5 text-gray-700">
             {ICONS[type]}
-            <p>{children}</p>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                {children}
+            </div>
         </div>
     );
 }
@@ -33,10 +37,16 @@ function DetailRow({ type, children }) {
 /**
  * CardDetails Component: Groups the list of detailed info about a restaurant.
  */
-export function CardDetails({ cuisines, rating, address }) {
+export function CardDetails({ cuisines, rating, address, specialties = [] }) {
     return (
         <div className="space-y-3 text-left flex-1 shrink-0">
-            <DetailRow type="cuisines"><span className="font-bold">Cuisines:</span> {cuisines}</DetailRow>
+            <DetailRow type="cuisines">
+                <span className="font-bold whitespace-nowrap">Cuisines:</span>
+                <span className="text-gray-600 font-medium" style={{ color: '#FF8000' }}>{cuisines || (specialties.length > 0 ? '' : 'Not specified')}</span>
+                {specialties.map((spec, index) => (
+                    <Tag key={index} text={spec} color="white" textColor="black" textTransform="none" borderStyle="border border-[#FF8000]" />
+                ))}
+            </DetailRow>
             <DetailRow type="rating"><span className="font-bold text-gray-900">Rating:</span> <span className="font-medium">{rating} / 5</span></DetailRow>
             <DetailRow type="address"><span className="font-bold">Address:</span> {address}</DetailRow>
         </div>

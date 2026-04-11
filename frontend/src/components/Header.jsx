@@ -1,13 +1,14 @@
 /**
  * NavBar Sub-Component: The sticky orange logo bar pinned to the top of the screen.
  */
-function NavBar({ logo }) {
+// We add altText as a prop, but give it your current string as the default fallback
+export function NavBar({ logo, altText = "Just Eat Takeaway Logo" }) {
     return (
         <header className="sticky top-0 z-50 bg-[#FF8000] py-3 shadow-md">
             <div className="px-5 md:px-8">
                 <img
                     src={logo}
-                    alt="Just Eat Takeaway Logo"
+                    alt={altText}
                     className="h-10 md:h-12 object-contain"
                 />
             </div>
