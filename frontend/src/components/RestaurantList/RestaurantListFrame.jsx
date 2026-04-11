@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tag } from './SharedComponents/Tag';
+import { EmptyState } from './ErrorStates/RestaurantListEmpty';
 
 /**
  * RestaurantListFrame Component: A branded frame in the JET Orange color for the restaurant cards.
@@ -19,18 +20,9 @@ export function RestaurantListFrame({ children }) {
                     />
                 </div>
 
-                {/* 2. Conditional Rendering: Show Empty State OR the Restaurant List */}
+                {/* Look how clean this logic is now! */}
                 {isEmpty ? (
-                    <div className="flex flex-col items-center justify-center py-16 md:py-24 text-white text-center mt-4">
-                        {/* You can replace this emoji with your ForkIcon if you prefer! */}
-                        <span className="text-6xl mb-4">🍽️</span>
-                        <h2 className="text-2xl md:text-3xl font-black tracking-wide mb-2">
-                            No available deliciousness around you!
-                        </h2>
-                        <p className="text-lg text-white/90 font-medium max-w-md">
-                            It looks like we couldn't find any restaurants. Try adjusting your search or checking back later.
-                        </p>
-                    </div>
+                    <EmptyState />
                 ) : (
                     <ul className="list-none p-0 space-y-6 md:space-y-8 mt-4 md:mt-2">
                         {children}
