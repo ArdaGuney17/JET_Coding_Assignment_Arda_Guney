@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AppConfig } from '../../../../config/appConfig';
+import { AppConfig } from '../../../config/appConfig';
 
 /**
  * MapLoading Sub-Component: Displays the branded spinner while the map loads.
@@ -70,13 +70,13 @@ export function MiniMap({ lat, lng }) {
         <div className="relative h-full min-h-[130px] w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:shadow-md bg-gray-50 flex items-center justify-center">
             {isLoading && !hasError && <MapLoading />}
             {hasError && <MapError />}
-            
+
             {!hasError && (
-                <MapFrame 
-                    lat={lat} 
-                    lng={lng} 
-                    isLoading={isLoading} 
-                    onMapLoad={() => setIsLoading(false)} 
+                <MapFrame
+                    lat={lat}
+                    lng={lng}
+                    isLoading={isLoading}
+                    onMapLoad={() => setIsLoading(false)}
                 />
             )}
         </div>

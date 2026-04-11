@@ -1,12 +1,12 @@
 import { CardHeader } from './CardHeader';
-import { CardDetails } from './CardDetails';
+import { CardDetails } from './CardBody';
 import { MiniMap } from './MiniMap';
 
 /**
- * RestaurantCard Component: Displays individual restaurant details.
+ * RestaurantPreviewCard Component: Displays individual restaurant details.
  * Completely modularized into CardHeader, CardDetails, and MiniMaporganisms.
  */
-export function RestaurantCard({ name, cuisines, rating, address, tags = [], lat, lng }) {
+export function RestaurantPreviewCard({ name, cuisines, rating, address, tags = [], lat, lng }) {
     return (
         <li className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-md transition-transform hover:scale-[1.01]">
             <CardHeader name={name} tags={tags} />

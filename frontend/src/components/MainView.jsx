@@ -1,5 +1,5 @@
-import { RestaurantList } from './RestaurantDetails/RestaurantList';
-import { RestaurantCard } from './RestaurantDetails/RestaurantCard/RestaurantCard';
+import { RestaurantListFrame } from './RestaurantList/RestaurantListFrame';
+import { RestaurantPreviewCard } from './RestaurantList/RestaurantCard/RestaurantPreviewCard';
 
 /**
  * LoadingState Component: Displays a professional loading spinner.
@@ -22,7 +22,7 @@ function ErrorState({ message }) {
             <div className="text-4xl mb-4">⚠️</div>
             <h2 className="text-red-900 text-xl font-bold mb-2">Something went wrong</h2>
             <p className="text-red-600 mb-6">{message}</p>
-            <button 
+            <button
                 onClick={() => window.location.reload()}
                 className="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors shadow-md"
             >
@@ -40,10 +40,10 @@ export function MainView({ restaurants, loading, error }) {
     if (error) return <ErrorState message={error} />;
 
     return (
-        <RestaurantList>
+        <RestaurantListFrame>
             {restaurants.map((res, index) => (
-                <RestaurantCard key={index} {...res} />
+                <RestaurantPreviewCard key={index} {...res} />
             ))}
-        </RestaurantList>
+        </RestaurantListFrame>
     );
 }
