@@ -53,13 +53,13 @@ class RestaurantTransformer:
             if not name:
                 continue
 
-            # Logic: Categorize into Marketing, Specialty, or Primary Cuisine
+            # Logic: Categorize into Marketing, Cultural Cuisine, or Specialty Tags
             if name in self.excluded_tags:
                 marketing_tags.append(name)
-            elif name in AppConfig.FEATURE_CUISINE_TAGS:
-                specialty_tags.append(name)
-            else:
+            elif name in AppConfig.CULTURAL_CUISINE_TYPES:
                 actual_cuisines.append(name)
+            else:
+                specialty_tags.append(name)
 
         return ", ".join(actual_cuisines), marketing_tags, specialty_tags
 

@@ -20,14 +20,21 @@ class TransformerConfig:
     FALLBACK_UNKNOWN_NAME = "Unknown Restaurant"
     FALLBACK_ERROR_NAME = "New Restaurant"
 
-    # Cuisine types that should be treated as "Features" (Tags) rather than primary cuisines.
-    # Anything NOT in this list will be treated as a primary cultural cuisine by default.
-    FEATURE_CUISINE_TAGS = {
-        "Alcohol", "BBQ", "Beauty", "Breakfast", "Brunch", "Bubble Tea", "Burgers", 
-        "Burritos", "Cakes", "Chicken", "Coffee", "Convenience", "Crepes", "Curry", 
-        "Desserts", "Dim Sum", "Dinner", "Electronics", "Fast Food", "Fish & Chips", 
-        "Grill", "Groceries", "Halal", "Hot Dogs", "Kebab", "Lunch", "Milkshakes", 
-        "Noodles", "Panini's", "Pasta", "Peri Peri", "Pharmacy", "Pies ", "Pizza", 
-        "Pub Food", "Sandwiches", "Shops", "Smoothies", "Steak", "Street Food", 
-        "Sushi", "Wraps"
+    # Primary Cultural Cuisines (Ethnicities).
+    # Anything in this list will be treated as a "Primary Cuisine" (Large orange text).
+    # Anything NOT in this list (and not a marketing tag) will be treated as a "Specialty Tag".
+    CULTURAL_CUISINE_TYPES = {
+        "Afghan", "African", "Albanian", "Algerian", "American", "Arabic", "Argentinian", 
+        "Armenian", "Asian", "Australian", "Austrian", "Azerbaijani", "Bangladeshi", 
+        "Belgian", "Brazilian", "British", "Bulgarian", "Burmese", "Cambodian", 
+        "Caribbean", "Chinese", "Colombian", "Cuban", "Cypriot", "Czech", "Danish", 
+        "Dutch", "Egyptian", "Ethiopian", "European", "French", "German", "Greek", 
+        "Hungarian", "Indian", "Indonesian", "Iranian", "Irish", "Israeli", "Italian", 
+        "Jamaican", "Japanese", "Jewish", "Korean", "Kurdish", "Lebanese", "Lithuanian", 
+        "Malaysian", "Mediterranean", "Mexican", "Middle Eastern", "Moroccan", 
+        "Nepalese", "Nigerian", "Norwegian", "Pakistani", "Persian", "Peruvian", 
+        "Philippine", "Polish", "Portuguese", "Romanian", "Russian", "Scandinavian", 
+        "Scottish", "South American", "Spanish", "Sri Lankan", "Swedish", "Swiss", 
+        "Syrian", "Taiwanese", "Thai", "Tibetan", "Turkish", "Ukrainian", "Vietnamese", 
+        "Welsh"
     }
