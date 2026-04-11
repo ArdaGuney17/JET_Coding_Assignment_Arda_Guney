@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { APIFetchError } from '../APIFetchError';
-import { EmptyState } from '../RestaurantListEmpty';
+import { APIFetchError } from '../components/RestaurantList/ErrorStatesList/APIFetchError';
+import { EmptyState } from '../components/RestaurantList/ErrorStatesList/RestaurantListEmpty';
 
 describe('Error States Components', () => {
   describe('APIFetchError', () => {

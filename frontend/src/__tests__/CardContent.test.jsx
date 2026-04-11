@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { CardHeader } from '../CardHeader';
-import { CardDetails } from '../CardBody';
+import { CardHeader } from '../components/RestaurantList/RestaurantCards/RestaurantCardsComponents/CardHeader';
+import { CardDetails } from '../components/RestaurantList/RestaurantCards/RestaurantCardsComponents/CardBody';
 
 describe('Card Content Resilience', () => {
     describe('CardHeader', () => {

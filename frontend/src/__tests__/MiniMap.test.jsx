@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { MiniMap } from '../MiniMap';
+import { MiniMap } from '../components/RestaurantList/RestaurantCards/RestaurantCardsComponents/MiniMap';
 
 describe('MiniMap Component Resilience', () => {
     it('renders the map frame when valid coordinates are provided', () => {

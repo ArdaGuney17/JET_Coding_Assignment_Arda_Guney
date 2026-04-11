@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { FallbackRestaurantCard } from './FallbackRestaurantCard';
+import { FallbackRestaurantCard } from '../components/RestaurantList/RestaurantCards/ErrorStatesCards/FallbackRestaurantCard';
 
 describe('FallbackRestaurantCard Component', () => {
   it('renders the Restaurant Unavailable text correctly', () => {

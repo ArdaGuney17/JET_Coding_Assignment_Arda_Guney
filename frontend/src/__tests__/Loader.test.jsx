@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { JETFetchLoader } from '../JETFetchLoader';
+import { JETFetchLoader } from '../components/RestaurantList/LoaderList/JETFetchLoader';
 
 describe('Loading States Components', () => {
   it('renders the JETFetchLoader with branded text', () => {
