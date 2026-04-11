@@ -17,4 +17,9 @@ export default defineConfig({
     // allowing for modern features like @import "tailwindcss" in our CSS files.
     tailwindcss(),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/__tests__/setup.js',
+  },
 })
