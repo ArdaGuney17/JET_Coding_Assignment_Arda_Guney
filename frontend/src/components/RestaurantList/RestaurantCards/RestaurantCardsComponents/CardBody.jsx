@@ -1,4 +1,4 @@
-import { Tag } from '../SharedComponents/Tag';
+import { Tag } from '../../SharedComponentsWithCards/Tag';
 
 /* Icons needed for cuisines, rating, and address */
 const ICONS = {
@@ -38,17 +38,27 @@ function DetailRow({ type, children }) {
  * CardDetails Component: Groups the list of detailed info about a restaurant.
  */
 export function CardDetails({ cuisines, rating, address, specialties = [] }) {
+    // Defensive check: if null is explicitly passed, convert back to array
+    const safeSpecialties = specialties || [];
+
     return (
         <div className="space-y-3 text-left flex-1 shrink-0">
             <DetailRow type="cuisines">
                 <span className="font-bold whitespace-nowrap">Cuisines:</span>
-                <span className="text-gray-600 font-medium" style={{ color: '#FF8000' }}>{cuisines || (specialties.length > 0 ? '' : 'Not specified')}</span>
-                {specialties.map((spec, index) => (
+                <span className="text-gray-600 font-medium" style={{ color: '#FF8000' }}>
+                    {cuisines || (safeSpecialties.length > 0 ? '' : 'Not specified')}
+                </span>
+                {safeSpecialties.map((spec, index) => (
                     <Tag key={index} text={spec} color="white" textColor="black" textTransform="none" borderStyle="border border-[#FF8000]" />
                 ))}
             </DetailRow>
-            <DetailRow type="rating"><span className="font-bold text-gray-900">Rating:</span> <span className="font-medium">{rating} / 5</span></DetailRow>
-            <DetailRow type="address"><span className="font-bold">Address:</span> {address}</DetailRow>
+            <DetailRow type="rating">
+                <span className="font-bold text-gray-900">Rating:</span> 
+                <span className="font-medium">{rating ? `${rating} / 5` : 'N/A'}</span>
+            </DetailRow>
+            <DetailRow type="address">
+                <span className="font-bold">Address:</span> {address || 'Not available'}
+            </DetailRow>
         </div>
     );
 }

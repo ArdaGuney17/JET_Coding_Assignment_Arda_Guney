@@ -15,10 +15,10 @@ function App() {
   return (
     <div className="min-h-screen bg-white font-sans">
       <Header logo={jetLogo} />
-      <MainView 
-        restaurants={restaurants} 
-        loading={loading} 
-        error={error} 
+      <MainView
+        restaurants={restaurants}
+        loading={loading}
+        error={error}
       />
     </div>
   )

@@ -1,6 +1,6 @@
-import { CardHeader } from './CardHeader';
-import { CardDetails } from './CardBody';
-import { MiniMap } from './MiniMap';
+import { CardHeader } from './RestaurantCardsComponents/CardHeader';
+import { CardDetails } from './RestaurantCardsComponents/CardBody';
+import { MiniMap } from './RestaurantCardsComponents/MiniMap';
 
 /**
  * RestaurantPreviewCard Component: Displays individual restaurant details.

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tag } from './SharedComponents/Tag';
-import { EmptyState } from './ErrorStates/RestaurantListEmpty';
+import { Tag } from './SharedComponentsWithCards/Tag';
+import { EmptyState } from './ErrorStatesList/RestaurantListEmpty';
 
 /**
  * RestaurantListFrame Component: A branded frame in the JET Orange color for the restaurant cards.

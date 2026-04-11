@@ -6,6 +6,7 @@ export function Tag({
     borderStyle = "border border-white/20" // Parameterized: defaults to current frame
 }) {
     const getIcon = (tagStr) => {
+        if (!tagStr || typeof tagStr !== 'string') return null;
         const lower = tagStr.toLowerCase();
         if (lower.includes('ranking')) return '🏆';
         if (lower.includes('freebies')) return '🎁';
@@ -23,7 +24,7 @@ export function Tag({
             tracking-widest 
             transition-all duration-300 hover:scale-105
         `}>
-            <span className="text-sm">{getIcon(text)}</span>
+            {getIcon(text) && <span className="text-sm">{getIcon(text)}</span>}
             {text}
         </span>
     );
