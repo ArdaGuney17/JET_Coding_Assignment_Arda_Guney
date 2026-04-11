@@ -12,6 +12,7 @@ class TestTransformerNameCleaning:
         assert transformer._clean_name("McDonalds - Branch") == "McDonalds"
         assert transformer._clean_name("Kebab|Shop") == "Kebab"
         assert transformer._clean_name("Pizza - House | Express") == "Pizza"
+        assert transformer._clean_name("KFC, Canterbury") == "KFC"
     
     def test_clean_name_corrupted(self, transformer):
         assert transformer._clean_name("") == "Unknown Restaurant"
