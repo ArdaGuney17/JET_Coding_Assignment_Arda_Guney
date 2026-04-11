@@ -7,6 +7,7 @@ import { MiniMapConfig } from '../../../../../config/MiniMapConfig';
 export function MiniMapFrame({ lat, lng, isLoading, onMapLoad }) {
     return (
         <iframe
+            title="Restaurant Location Map"
             width="100%"
             height="100%"
             style={{ border: 0 }}
