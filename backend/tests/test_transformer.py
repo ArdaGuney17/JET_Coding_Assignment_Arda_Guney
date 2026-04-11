@@ -53,6 +53,28 @@ class TestTransformerLogic:
         assert "Deals" in marketing
         assert "Pizza" in specialty
         
+    def test_extract_coordinates(self, transformer):
+        # Test 1: Perfect GPS coordinates (API format is [lng, lat])
+        valid_address = {
+            "location": {
+                "coordinates": [-2.98724, 53.4044]
+            }
+        }
+        # We process the whole model just for this test
+        model_valid = transformer.transform_to_model({"address": valid_address})
+        assert model_valid.lng == -2.98724
+        assert model_valid.lat == 53.4044
+        
+        # Test 2: Incomplete coordinates (array length != 2)
+        invalid_address = {
+            "location": {
+                "coordinates": [-2.98724]
+            }
+        }
+        model_invalid = transformer.transform_to_model({"address": invalid_address})
+        assert model_invalid.lng is None
+        assert model_invalid.lat is None
+        
     def test_corrupted_overall_data(self, transformer):
         # We simulate our API throwing a complete fit and returning an empty object.
         # This tests if ALL your default fallbacks work together.
