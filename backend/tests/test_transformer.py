@@ -1,35 +1,25 @@
 import pytest
 from services.transformer import RestaurantTransformer
+from config.services.transformer_config import TransformerConfig
 
-# Let's create a fixture. A fixture is a setup function that Pytest runs before tests.
-# It provides our test with a fresh instance of the Transformer to use.
 @pytest.fixture
 def transformer():
-    # We pass an empty set for excluded_tags, as we aren't testing the cuisine logic yet
-    return RestaurantTransformer(excluded_tags=set())
+    # To test logic, we pass a common marketing tag as an excluded tag
+    return RestaurantTransformer(excluded_tags={"Deals", "Freebies"})
 
 class TestTransformerNameCleaning:
-    """Testing how the Transformer handles strings with separators and corrupted data."""
-
     def test_clean_name_with_separators(self, transformer):
-        # Normal inputs with messy separators
         assert transformer._clean_name("McDonalds - Branch") == "McDonalds"
         assert transformer._clean_name("Kebab|Shop") == "Kebab"
         assert transformer._clean_name("Pizza - House | Express") == "Pizza"
     
     def test_clean_name_corrupted(self, transformer):
-        # Testing what happens when the name is entirely missing or null
         assert transformer._clean_name("") == "Unknown Restaurant"
         assert transformer._clean_name(None) == "Unknown Restaurant"
-        
-        # Testing what happens if the data type is completely wrong (like a boolean)
         assert transformer._clean_name(False) == "Unknown Restaurant"
 
 class TestTransformerAddressFormatting:
-    """Testing how the Transformer builds the address string from pieces."""
-
     def test_format_address_full(self, transformer):
-        # Testing a perfect address from the API
         mock_raw_address = {
             "city": "London",
             "firstLine": "123 Fake Street",
@@ -38,13 +28,40 @@ class TestTransformerAddressFormatting:
         assert transformer._format_address(mock_raw_address) == "London, 123 Fake Street, W1 1AB"
         
     def test_format_address_partial_and_missing(self, transformer):
-        # Testing when only part of the address is present
         mock_partial = {
             "city": "Manchester",
             "postalCode": "M1"
         }
-        # Notice how missing pieces just leave commas. Our frontend knows how to handle raw strings.
         assert transformer._format_address(mock_partial) == "Manchester, , M1"
-        
-        # Testing a completely empty dict (the fallback when app configuration fails)
         assert transformer._format_address({}) == ""
+
+class TestTransformerLogic:
+    """Testing the inverted ethnicity logic and the overall resilience to fully corrupted data."""
+
+    def test_extract_cuisines_and_tags(self, transformer):
+        raw_cuisines = [
+            {"name": "Italian"},   # Should become a primary cuisine (ethnicity)
+            {"name": "Pizza"},     # Should become a specialty tag (not an ethnicity)
+            {"name": "Deals"},     # Should become a marketing tag (excluded)
+            {"name": ""}           # Should be safely ignored
+        ]
+        
+        cuisines, marketing, specialty = transformer._extract_cuisines_and_tags(raw_cuisines)
+        
+        assert cuisines == "Italian"
+        assert "Deals" in marketing
+        assert "Pizza" in specialty
+        
+    def test_corrupted_overall_data(self, transformer):
+        # We simulate our API throwing a complete fit and returning an empty object.
+        # This tests if ALL your default fallbacks work together.
+        corrupted_data = {}
+        
+        restaurant_model = transformer.transform_to_model(corrupted_data)
+        
+        assert restaurant_model.name == "Unknown Restaurant"
+        assert restaurant_model.cuisines == ""
+        assert restaurant_model.rating is None
+        assert restaurant_model.address == ""
+        assert restaurant_model.lat is None
+        assert restaurant_model.lng is None
