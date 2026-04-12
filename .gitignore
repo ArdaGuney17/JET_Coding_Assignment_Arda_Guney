@@ -1,22 +1,31 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 *.pyd
 
 # Virtual Environments
-venv/
-.venv/
+backend/venv/
+backend/.venv/
 env/
+.env
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Testing
+backend/.pytest_cache/
+frontend/.vitest/
+coverage/
 
 # IDEs
 .vscode/
 .idea/
-
-# Node / React
-node_modules/
-dist/
-.env
+*.swp
+*.swo
 
 # OS Files
 .DS_Store
