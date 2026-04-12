@@ -4,7 +4,7 @@ import { MiniMap } from './RestaurantCardsComponents/MiniMap';
 
 /**
  * RestaurantPreviewCard Component: Displays individual restaurant details.
- * Completely modularized into CardHeader, CardDetails, and MiniMaporganisms.
+ * Completely modularized into CardHeader, CardDetails, and MiniMap.
  */
 export function RestaurantPreviewCard({ name, cuisines, rating, address, tags = [], specialties = [], lat, lng }) {
     return (
