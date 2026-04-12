@@ -1,8 +1,23 @@
 # 🍽️ Return First 10 Restaurants - JET Complete at Home Coding Assignment
 
-My solution to the JET Complete at Home Coding Assignment. Return First 10 Restaurants and their requested data name, cuisines, rating and address.
+My solution to the JET Complete at Home Coding Assignment. Returns the first 10 restaurants for a given postcode with their requested data: name, cuisines, rating, and address.
+
+---
 
 ## 🚀 Quick Start: How to Run
+
+### 0. Clone the Repository
+First, clone the project to your local machine:
+
+```bash
+git clone [https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git](https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git)
+```
+
+Go to the project folder:
+
+```bash
+cd JET_Coding_Assignment_Arda_Guney
+```
 
 ### 1. Backend (FastAPI)
 The backend manages data fetching, transformation, and caching.

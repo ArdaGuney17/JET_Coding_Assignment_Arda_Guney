@@ -80,21 +80,26 @@ I assumed that every external dependency (the API, the network, the GPS data) co
 
 ---
 
+---
+
 ## 4. Automated Testing & Quality Assurance
 
 To ensure the long-term stability and resilience of the application, I implemented a dual-layer automated testing suite with **27/27 successful test cases**.
 
 ### 🐍 Backend Testing (Pytest)
+**Command:** `cd backend && .\venv\Scripts\python -m pytest tests/`
+
 I utilized `pytest` to verify the highly decoupled modularity of our backend architecture:
 - **Transformer Unit Tests**: Verified name-cleaning logic, address formatting, and the three-tier cuisine classification.
 - **Service Mocking**: Implemented `unittest.mock` to isolate the Orchestrator, allowing us to test business logic independently of external network conditions.
 - **Integration Tests**: Used FastAPI's `TestClient` to conduct high-level API route testing, ensuring our endpoints return correct status codes and JSON schemas.
 
 ### ⚛️ Frontend Testing (Vitest & RTL)
+**Command:** `cd frontend && npm run test`
+
 I utilized `Vitest` and `React Testing Library` to verify UI resilience and component behavior:
 - **Requirement Verification**: Component tests ensure that Name, Cuisine, Rating, and Address are always rendered as expected.
 - **Data Resilience (The Stress Test)**: Specifically tested components against **null, undefined, and corrupted data**. These tests confirm that our "Fallback" UI prevents a single broken restaurant from crashing the entire list.
 - **Interactive Mapping Logic**: Verified that the `MiniMap` correctly detects missing coordinates and renders a graceful error state rather than a broken iframe.
-
 ---
 *Documented by Arda Guney - Strategic Implementation*
