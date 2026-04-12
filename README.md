@@ -10,7 +10,7 @@ My solution to the JET Complete at Home Coding Assignment. Returns the first 10 
 First, clone the project to your local machine:
 
 ```bash
-git clone [https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git](https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git)
+git clone https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git
 ```
 
 Go to the project folder:
