@@ -161,11 +161,11 @@ If I had more time, I would expand the application with the following product an
 
 2. **Dynamic Sorting Mechanisms**
 
-    * Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), by total review count and by the marketing and dietary tags I have created for the solution of the second problem listed in the "Ambiguities" section (e.g. "Deals", "Halal", etc.).
+    * Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
 
-3. **Granular Faceted Filtering**
+3. **Filtering Restaurants**
 
-    * Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines, individual food items, or a strict minimum star rating.
+    * Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines or by food item tags (e.g. "Pizza", "Sushi" , "Halal" etc.) I have created for the solution of the second problem listed in the "Ambiguities" section or a strict minimum star rating.
 
 4. **Geolocation Integration**
 
