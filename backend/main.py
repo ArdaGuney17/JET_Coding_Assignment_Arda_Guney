@@ -1,7 +1,7 @@
 # The Entry Point Lynchpin
 # In the God-Tier Architecture, this file is only a starting point for the Factory.
 
-from core.factory import create_app
+from setup.startup import create_app
 
 # Manufacture the application instance
 JET_app = create_app()
