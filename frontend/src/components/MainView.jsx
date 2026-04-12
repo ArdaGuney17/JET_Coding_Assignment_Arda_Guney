@@ -12,18 +12,6 @@ export function MainView({ restaurants, loading, error }) {
     if (error) return <APIFetchError message={error} />;
 
     const restaurantList = Array.isArray(restaurants) ? restaurants : [];
-    /*const testData = [
-        ...restaurants,
-        {
-            name: "Pizeraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            cuisines: "Mexican",
-            specialties: null,
-            address: null,
-            rating: null,
-            lat: "arxda",
-            lng: null
-        }
-    ];*/
 
     return (
         <RestaurantListFrame>
