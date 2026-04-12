@@ -102,4 +102,4 @@ I utilized `Vitest` and `React Testing Library` to verify UI resilience and comp
 - **Data Resilience (The Stress Test)**: Specifically tested components against **null, undefined, and corrupted data**. These tests confirm that our "Fallback" UI prevents a single broken restaurant from crashing the entire list.
 - **Interactive Mapping Logic**: Verified that the `MiniMap` correctly detects missing coordinates and renders a graceful error state rather than a broken iframe.
 ---
-*Documented by Arda Guney - Strategic Implementation*
+*Documented by Arda Guney - JET Coding Assignment*
