@@ -121,6 +121,28 @@ All magic strings (API paths, JSON schema keys, separator characters, cuisine ta
 #### Dependency Injection
 FastAPI's `Depends()` system (`api/dependencies.py`) is used to inject the `RestaurantService` into route handlers. This means the full service graph (Fetcher → Transformer → Orchestrator) is wired up once and shared, not re-created on every request, and can be swapped for mocks in tests.
 
+#### Directory Structure
+Here is how the concepts map to the physical structural components:
+
+```text
+backend/
+ ├── main.py                  ← application entry point, kept intentionally minimal
+ ├── api/
+ │    ├── dependencies.py     ← DI pipeline and cached singleton setup
+ │    └── routes.py           ← API endpoints mapping
+ ├── config/                  ← centralized constants and environmental configuration
+ ├── models/
+ │    └── restaurant.py       ← Pydantic schemas for strict data validation
+ ├── services/
+ │    ├── fetcher.py          ← raw HTTP network integration with Just Eat
+ │    ├── transformer.py      ← data cleaning, normalization, and taxonomy logic
+ │    └── orchestrator.py     ← coordinates service flows, handles caching and sorting
+ ├── setup/
+ │    ├── startup.py          ← App Factory pattern module (create_app)
+ │    └── middleware.py       ← CORS and security configurations
+ └── tests/                   ← Pytest suite with isolated testing layers
+```
+
 ---
 
 ### Frontend — React + Vite
