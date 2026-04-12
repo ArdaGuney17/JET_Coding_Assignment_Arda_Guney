@@ -6,23 +6,30 @@ My solution to the JET Complete at Home Coding Assignment. Returns the first 10 
 
 ## 🚀 Quick Start: How to Run
 
-### 0. Clone the Repository
-First, clone the project to your local machine:
+### 0. Clone and Navigate
+First, prepare a folder on your local machine and clone the repository:
 
-```bash
-git clone https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git
-```
+1. **Create a folder for the project**:
+   ```bash
+   # Example for Desktop
+   cd Desktop
+   mkdir JET_Project
+   cd JET_Project
+   ```
+2. **Clone the Repository to the folder you created**:
+   ```bash
+    git clone https://github.com/ArdaGuney17/JET_Coding_Assignment_Arda_Guney.git
+    ```
 
-Go to the project folder:
-
-```bash
-cd JET_Coding_Assignment_Arda_Guney
-```
+3. **Go to the project folder**:
+   ```bash
+   cd JET_Coding_Assignment_Arda_Guney
+   ```
 
 ### 1. Backend (FastAPI)
-The backend manages data fetching, transformation, and caching.
+Lets start by setting up the backend:
 
-1.  **Navigate to the backend folder**:
+1.  **Navigate to the backend folder when u are still in the project folder**:
     ```bash
     cd backend
     ```
