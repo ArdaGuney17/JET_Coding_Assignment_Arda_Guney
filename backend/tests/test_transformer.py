@@ -33,7 +33,7 @@ class TestTransformerAddressFormatting:
             "city": "Manchester",
             "postalCode": "M1"
         }
-        assert transformer._format_address(mock_partial) == "Manchester, , M1"
+        assert transformer._format_address(mock_partial) == "Manchester, M1"
         assert transformer._format_address({}) == ""
 
 class TestTransformerLogic:

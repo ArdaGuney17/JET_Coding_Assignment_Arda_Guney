@@ -67,4 +67,5 @@ class RestaurantTransformer:
         city = raw_address.get(AppConfig.CITY, '')
         first_line = raw_address.get(AppConfig.FIRST_LINE, '')
         postal_code = raw_address.get(AppConfig.POSTAL_CODE, '')
-        return f"{city}, {first_line}, {postal_code}".strip(", ")
+        parts = [p for p in [city, first_line, postal_code] if p]
+        return ", ".join(parts)
