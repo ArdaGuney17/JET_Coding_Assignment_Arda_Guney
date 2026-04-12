@@ -5,7 +5,7 @@ from config import AppConfig
 
 class RestaurantService:
     """
-    The Master Orchestrator (The Pump).
+    The Master Orchestrator.
     It coordinates the Fetcher and the Transformer to provide the final data service.
     Implements in-memory caching to prevent excessive external API calls (429 errors).
     """

@@ -4,7 +4,7 @@ from typing import List, Optional
 class Restaurant(BaseModel):
     """
     The Data Model for a Restaurant.
-    Defines the exact structure of our cleaned data.
+    Defines the exact structure of the cleaned data.
     """
     name: str
     cuisines: str

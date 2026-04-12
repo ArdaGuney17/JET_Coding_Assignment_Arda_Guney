@@ -4,7 +4,7 @@ from config.services.transformer_config import TransformerConfig
 
 @pytest.fixture
 def transformer():
-    # To test logic, we pass a common marketing tag as an excluded tag
+    # To test logic, I pass a common marketing tag as an excluded tag
     return RestaurantTransformer(excluded_tags={"Deals", "Freebies"})
 
 class TestTransformerNameCleaning:
@@ -60,7 +60,7 @@ class TestTransformerLogic:
                 "coordinates": [-2.98724, 53.4044]
             }
         }
-        # We process the whole model just for this test
+        # I process the whole model just for this test
         model_valid = transformer.transform_to_model({"address": valid_address})
         assert model_valid.lng == -2.98724
         assert model_valid.lat == 53.4044
@@ -76,8 +76,7 @@ class TestTransformerLogic:
         assert model_invalid.lat is None
         
     def test_corrupted_overall_data(self, transformer):
-        # We simulate our API throwing a complete fit and returning an empty object.
-        # This tests if ALL your default fallbacks work together.
+        # Simulate an API returning an empty object to test all default fallbacks.
         corrupted_data = {}
         
         restaurant_model = transformer.transform_to_model(corrupted_data)

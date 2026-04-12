@@ -7,10 +7,10 @@ import { createRoot } from 'react-dom/client'
 // Importing the Tailwind styles globally for use in the application.
 import './index.css'
 
-// Importing the main component that contains all of our UI logic and restaurant cards.
+// Importing the main component that contains all of the UI logic and restaurant cards.
 import App from './App.jsx'
 
-// Finds the 'root' div in the HTML and puts our App inside it
+// Finds the 'root' div in the HTML and puts the App inside it
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />

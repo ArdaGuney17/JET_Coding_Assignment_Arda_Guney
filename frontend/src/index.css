@@ -1,6 +1,6 @@
 /* 
   Tailwind CSS v4 Import 
-  Allows using classes like 'flex', 'bg-orange', and 'shadow' directly in our JSX.
+  Allows using classes like 'flex', 'bg-orange', and 'shadow' directly in the JSX.
 */
 @import "tailwindcss";
 

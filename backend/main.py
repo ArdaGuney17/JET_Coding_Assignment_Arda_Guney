@@ -1,5 +1,5 @@
-# The Entry Point Lynchpin
-# In the God-Tier Architecture, this file is only a starting point for the Factory.
+# Main Entry Point
+# In this Modular Architecture, this file is only a starting point for the Factory.
 
 from setup.startup import create_app
 

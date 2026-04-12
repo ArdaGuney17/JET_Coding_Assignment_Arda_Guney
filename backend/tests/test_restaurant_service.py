@@ -13,18 +13,18 @@ def mock_fetcher():
 
 @pytest.fixture
 def real_transformer():
-    """Use the real transformer so we can see the full data flow."""
+    """Use the real transformer so I can see the full data flow."""
     return RestaurantTransformer(excluded_tags=set())
 
 @pytest.fixture
 def restaurant_service(mock_fetcher, real_transformer):
-    """Provide a service instance wired with our fake fetcher."""
+    """Provide a service instance wired with my fake fetcher."""
     return RestaurantService(fetcher=mock_fetcher, transformer=real_transformer)
 
 class TestRestaurantServiceMocking:
     
     def test_get_top_rated_restaurants_success(self, restaurant_service, mock_fetcher):
-        # 1. Arrange: Setup the fake data we want the mock to return
+        # 1. Arrange: Setup the fake data I want the mock to return
         fake_api_response = {
             "restaurants": [
                 {
@@ -39,11 +39,11 @@ class TestRestaurantServiceMocking:
                 }
             ]
         }
-        # Tell the fake fetcher to return our fake data instead of calling the internet
+        # Tell the fake fetcher to return my fake data instead of calling the internet
         mock_fetcher.fetch_raw_restaurants.return_value = fake_api_response
         
         # 2. Act: Call the service method
-        # This will call our mock_fetcher under the hood!
+        # This will call my mock_fetcher under the hood!
         results = restaurant_service.get_top_rated_restaurants(limit=2)
         
         # 3. Assert: Verify the results

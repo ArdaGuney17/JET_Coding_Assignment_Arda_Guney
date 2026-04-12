@@ -5,33 +5,33 @@ This document provides a detailed breakdown of the logic powering the **Restaura
 ---
 
 ## 1. Core Task Requirements
-As per the assignment brief, the following mandatory data points are successfully fetched, transformed, and displayed:
+As per the assignment brief, the following mandatory data points are successfully fetched, transformed, and displayed. The list is strictly limited to the **first 10 restaurants** returned:
 
-*   **Restaurant Name**: Cleaned brand representation.
-*   **Cuisines**: Culturally accurate identifiers.
-*   **Rating**: Verified numerical value out of 5.
-*   **Address**: Formatted city, street, and postcode.
+* **Restaurant Name**: Isolated the clean brand names of the restaurants and displayed them as the primary title on each card.
+* **Cuisines**: Highlighted the primary cultural cuisines and extracted secondary food types/marketing data to display as supporting helper tags.
+* **Rating**: Parsed and displayed as a clear, verified numerical value (e.g., `4.5 / 5`).
+* **Address**: Rendered the human-readable text (City, Street, Postcode) as the main address line, while utilizing the raw, unreadable GPS coordinates to visually display the location on a map.
 
 ---
 
-## 2. Improvements Done By Personal Touch
+## 2. Architectural & UX Enhancements
 
-Beyond the basic requirements, several sophisticated logic layers were added to ensure the application feels professional and resilient.
+Beyond the basic requirements, several sophisticated logic layers were added to ensure the application feels professional, intuitive, and highly resilient.
 
 ### ✨ Intelligent Data Cleaning (`_clean_name`)
 The raw Just Eat API often includes extra data in the name field (e.g., `"Subway - London | High Street"`). 
-- **Implementation**: We implemented a normalization engine that detects separators like `-`, `|`, and `,`. 
-- **Outcome**: The UI displays only the clean brand name (**Subway**), while the supporting location data is moved to the Address field where it belongs.
+- **Implementation**: I built a normalization engine that detects separators like `-`, `|`, and `,`. 
+- **Outcome**: The UI displays only the clean brand name (**Subway**), while the supporting location data is implicitly handled by the Address field where it belongs.
 
 ### 🍱 Multi-Tier Cuisine Classification
-Raw API data often lumps "Italian" (Cultural) together with "Pizza" (Food Type) and "Deals" (Marketing). We implemented a three-tier classification system:
+Raw API data often lumps "Italian" (Cultural) together with "Pizza" (Food Type) and "Deals" (Marketing). I implemented a three-tier classification system:
 1.  **Primary Cuisines**: Dedicated list of 70+ cultural identities (Italian, Japanese, etc.) rendered in large branded text.
-2.  **Specialty Tags**: specific food items (Burgers, Tacos) displayed as helper tags next to the cuisine.
+2.  **Specialty Tags**: Specific food items (Burgers, Tacos) displayed as helper tags next to the cuisine.
 3.  **Marketing Insights**: High-value tags like "Free Delivery" or "Offers" are automatically moved to the top-right of the card to catch the user's eye.
 
 ### 📍 Geographic Mapping (From GPS to Visuals)
 Raw coordinates (like `0.12, 51.52`) are unreadable to humans. 
-- **Implementation**: Instead of letting these strings "go astray," we integrated a **MiniMap** component. 
+- **Implementation**: Instead of letting these strings "go astray," I integrated a **MiniMap** component. 
 - **Outcome**: The backend extracts these coordinates and the frontend injects them into a Google Maps Embed frame, giving the user instant visual context of where the restaurant is located.
 
 ### 🛡️ The 5 Layers of Resilience (Error Handling)
@@ -50,7 +50,7 @@ I assumed that every external dependency (the API, the network, the GPS data) co
 
 #### Layer 4: Lifecycle & UI States (Frontend)
 - **State Management**: The main application tracks `isLoading` and `error` states. 
-    - **`APIFetchError`**: If the total backend fails, the user sees a helpful, styled error message instead of a blank white screen.
+    - **`APIFetchError`**: If the entire backend fails, the user sees a helpful, styled error message instead of a blank white screen.
     - **`EmptyState`**: If the postcode has no restaurants, the `RestaurantListFrame` detects `isEmpty` and renders a themed "No Restaurants Found" illustration.
 
 #### Layer 5: Component-Level Isolation (Frontend)
@@ -65,7 +65,7 @@ I assumed that every external dependency (the API, the network, the GPS data) co
 | :--- | :--- | :--- |
 | **Backend (Setup)** | `setup.startup.create_app` | The "Factory" that assembles and returns the FastAPI instance. |
 | **Backend (Setup)** | `setup.middleware.setup_middleware` | Configures security policies (CORS) for every incoming request. |
-| **Backend (API)** | `api.routes.get_restaurants` | The primary entry point that exposes the data to the internet. |
+| **Backend (API)** | `api.routes.get_restaurants` | The primary entry point that exposes the data to the frontend. |
 | **Backend (Logic)** | `RestaurantTransformer._clean_name` | Removes noise and separators from the raw brand names. |
 | **Backend (Logic)** | `RestaurantTransformer._extract_cuisines_and_tags` | Categorizes raw tags into Cultural, Specialty, or Marketing groups. |
 | **Backend (Logic)** | `RestaurantFetcher.fetch_restaurants` | Handles low-level HTTP communication and network timeouts. |
@@ -85,7 +85,7 @@ I assumed that every external dependency (the API, the network, the GPS data) co
 To ensure the long-term stability and resilience of the application, I implemented a dual-layer automated testing suite with **27/27 successful test cases**.
 
 ### 🐍 Backend Testing (Pytest)
-I utilized `pytest` to verify the "God-Tier" modularity of our backend architecture:
+I utilized `pytest` to verify the highly decoupled modularity of our backend architecture:
 - **Transformer Unit Tests**: Verified name-cleaning logic, address formatting, and the three-tier cuisine classification.
 - **Service Mocking**: Implemented `unittest.mock` to isolate the Orchestrator, allowing us to test business logic independently of external network conditions.
 - **Integration Tests**: Used FastAPI's `TestClient` to conduct high-level API route testing, ensuring our endpoints return correct status codes and JSON schemas.

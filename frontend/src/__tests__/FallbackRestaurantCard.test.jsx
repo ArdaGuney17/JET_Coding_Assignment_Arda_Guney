@@ -15,7 +15,7 @@ describe('FallbackRestaurantCard Component', () => {
     render(<FallbackRestaurantCard />);
     
     // Check for the sub-text that explains why this card appears
-    const subtitleElement = screen.getByText(/We're having trouble loading the details/i);
+    const subtitleElement = screen.getByText(/Trouble loading the details/i);
 
     expect(subtitleElement).toBeInTheDocument();
   });

@@ -5,7 +5,7 @@ from api.dependencies import get_restaurant_service
 from unittest.mock import Mock
 from models import Restaurant
 
-# Create a test client using our real FastAPI app
+# Create a test client using my real FastAPI app
 client = TestClient(JET_app)
 
 @pytest.fixture
@@ -31,18 +31,18 @@ class TestAPIRoutes:
         ]
         mock_service.get_top_rated_restaurants.return_value = fake_restaurants
         
-        # Override the FastAPI dependency injection so it uses our fake service
+        # Override the FastAPI dependency injection so it uses my fake service
         # instead of building a real one that hits the internet!
         JET_app.dependency_overrides[get_restaurant_service] = lambda: mock_service
         
-        # 2. Act: Pretend to be a web browser and hit our API endpoint
+        # 2. Act: Pretend to be a web browser and hit my API endpoint
         response = client.get("/")
         
         # Clean up the override so it doesn't affect other tests
         JET_app.dependency_overrides.clear()
         
         # 3. Assert: Verify the API boundaries
-        # Did we get a 200 OK?
+        # Did I get a 200 OK?
         assert response.status_code == 200
         
         data = response.json()
