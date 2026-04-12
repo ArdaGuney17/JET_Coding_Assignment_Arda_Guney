@@ -70,17 +70,26 @@ Lets start by setting up the backend:
 
 ---
 
-## 🧪 Running Tests
+## 🧪 Quality Assurance & Testing Strategy
+
+A rigorous testing strategy is implemented across both the backend and frontend to ensure data integrity, component resilience, and API reliability. This demonstrates my strong focus on delivering production-ready, high-quality software and verifying all business logic through unit tests.
 
 ### Backend Tests (Pytest)
-Includes unit tests for transformers, service mocks, and API endpoints.
+The backend test suite heavily focuses on unit testing the core business and transformation logic.
+- **Transformer Tests**: Ensures raw API data is strictly validated and accurately converted into the Pydantic models. Unit tests heavily cover edge cases, missing fields, and taxonomy normalization without relying on live API data.
+- **Service Mocks**: Simulates various network responses (e.g., successful API calls, HTTP errors) to verify the orchestrator's resilience and caching mechanisms.
+- **API Endpoints**: Validates the REST schema, proper error propagation, and correct HTTP status codes.
+
 ```bash
 cd backend                                # first go to the backend folder if you are not already there
 .\venv\Scripts\python -m pytest tests/    # run the tests
 ```
 
 ### Frontend Tests (Vitest)
-Includes component resilience tests and UI verification.
+The frontend implements component-level unit testing to verify the UI's resilience against varied data states.
+- **Component Resilience**: Validates that components render correctly even with partial or missing data, ensuring graceful degradation.
+- **UI Verification**: Tests the dynamic rendering logic, loading states, and error boundaries.
+
 ```bash
 cd frontend         # first go to the frontend folder if you are not already there
 npm run test        # run the tests in Terminal mode
