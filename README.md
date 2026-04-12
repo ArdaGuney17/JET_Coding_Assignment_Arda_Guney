@@ -51,17 +51,11 @@ The backend manages data fetching, transformation, and caching.
     ```bash
     cd JET_Coding_Assignment_Arda_Guney/frontend
     ```
-3.  **Install and Run**:
-    ```bash
-    npm install
-    npm run dev
-    ```
-    *The UI will be available at http://localhost:5173/*
-4.  **Install dependencies**:
+3.  **Install dependencies**:
     ```bash
     npm install
     ```
-5.  **Run the development server**:
+4.  **Run the development server**:
     ```bash
     npm run dev
     ```
