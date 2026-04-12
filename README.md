@@ -157,35 +157,35 @@ If I had more time, I would expand the application with the following product an
 
 1. **Interactive Postcode Search**
 
-Implement a fully validated UI input field, allowing users to dynamically fetch and explore restaurants for any valid UK postcode instead of relying on a static query.
+* Implement a fully validated UI input field, allowing users to dynamically fetch and explore restaurants for any valid UK postcode instead of relying on a static query.
 
 2. **Dynamic Sorting Mechanisms**
 
-Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
+* Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
 
 3. **Granular Faceted Filtering**
 
-Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines, individual food items, or a strict minimum star rating.
+* Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines, individual food items, or a strict minimum star rating.
 
 4. **Geolocation Integration**
 
-Utilize the browser's Geolocation API to capture the user's actual coordinates. I would then use a Haversine formula on the backend to calculate and display the exact physical distance between the user and each restaurant.
+* Utilize the browser's Geolocation API to capture the user's actual coordinates. I would then use a Haversine formula on the backend to calculate and display the exact physical distance between the user and each restaurant.
 
 5. **Rich Commercial Data Integration**
 
-Safely expand the project scope to utilize the other highly valuable data points available in the Just Eat API response, transforming the UI into a fully functional food delivery platform.
+* Safely expand the project scope to utilize the other highly valuable data points available in the Just Eat API response, transforming the UI into a fully functional food delivery platform.
 
 6. **Persistent Storage Architecture**
 
-Transition from the current in-memory data management approach to securely store restaurant schemas, geographical data, and application states, possible user related data that may added in future such as user preferences, favorite restaurants, order history, etc.
+* Transition from the current in-memory data management approach to securely store restaurant schemas, geographical data, and application states, possible user related data that may added in future such as user preferences, favorite restaurants, order history, etc.
 
 7. **Identity Management & Social Engagement**
 
-Implement a secure user authentication system (e.g., JWT or OAuth 2.0) to support personalized user accounts. This would unlock community-driven features, allowing users to save favorite restaurants, highlight specific menu items, and leave interactive comments or reviews.
+* Implement a secure user authentication system (e.g., JWT or OAuth 2.0) to support personalized user accounts. This would unlock community-driven features, allowing users to save favorite restaurants, highlight specific menu items, and leave interactive comments or reviews.
 
 8. **Cross-Platform Mobile Integration**
 
-Acknowledging that food delivery is primarily a mobile-driven user journey, I would convert the web application into a Progressive Web App (PWA) for offline capabilities, or migrate the frontend UI components to **React Native** to deploy native iOS and Android applications.
+* Acknowledging that food delivery is primarily a mobile-driven user journey, I would convert the web application into a Progressive Web App (PWA) for offline capabilities, or migrate the frontend UI components to **React Native** to deploy native iOS and Android applications.
 
 9. **Two-Sided Marketplace & Vendor Portal**
 
