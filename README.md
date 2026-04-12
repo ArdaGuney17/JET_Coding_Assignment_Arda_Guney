@@ -122,15 +122,15 @@ While building the application, I encountered several ambiguities in the raw Jus
     * **The Ambiguity:** The API response returned a massive payload with other highly valuable data points (e.g., delivery time, delivery cost, minimum order value). It wasn't mentioned whether adding these to the UI would be seen as a bonus or as failing to follow strict instructions.
     * **My Solution:** I decided to strictly adhere to the assignment brief. I intentionally ignored these extra fields to prevent scope creep, keeping the UI clean, focused, and exactly aligned with the four requested data points. (I did, however, note these fields in the "Future Improvements" section).
 
-    5.  **Incomplete Data & Marketplace Fairness**: 
+5.  **Incomplete Data & Marketplace Fairness**: 
     * **The Ambiguity:** The dataset is inconsistent. Some restaurants have rich arrays of marketing tags, specific food items while some lacked parts of it. Or in future cases which was not the case in the part of the dataset I used, some restaurant may lack other details like coordinates or rating. If the UI dynamically displays all this information being unconsiderate of the ones that does not have it, restaurants with complete profiles might appear visually superior or more prominent, potentially creating an unfair advantage on the platform. Details like this on how to treat the unbalanced data is not specified in the requirements.
     * **My Solution:** For the scope of this assignment, I prioritized demonstrating my technical abilities. I implemented dynamic rendering to display all extracted data (e.g., rendering the MiniMap only if coordinates exist, and showing specialty tags if available) to showcase my ability to handle complex data structures and build a rich UI. However, I recognize that in a production environment, there should be a defined business standard (e.g., strict UI normalization or fallback placeholders) to ensure fair competition among all restaurant partners.
 
-    6.  **Display Ordering & Default Sorting**: 
+6.  **Display Ordering & Default Sorting**: 
     * **The Ambiguity:** The brief requested returning the "first 10 restaurants" but did not specify a sorting mechanism (e.g., default API order, highest rating, alphabetical). 
     * **My Solution:** I assumed that prioritizing user experience meant showing the highest-quality options first. Therefore, I implemented a sorting mechanism to display the top 10 restaurants based on their **Rating (highest to lowest)**. I recognize that in a real-world product, this default sort might instead be driven by commercial business logic, such as prioritizing sponsored restaurants or those with active marketing campaigns.
 
-    7.  **Graceful Degradation for Partial Data**: 
+7.  **Graceful Degradation for Partial Data**: 
     * **The Ambiguity:** There were no guidelines on how to handle a restaurant entry if it was missing some of its data (e.g., the API returns a restaurant, but the name or address field is `null`). It was unclear whether to completely discard that restaurant from the top 10 list or display it anyway.
     * **My Solution:** I opted for **graceful degradation**. Rather than completely discarding a restaurant and artificially reducing the available choices for the user, I designed the UI to display whatever valid data is available. If a specific detail is missing, the component safely omits it or provides a sensible fallback, ensuring the restaurant remains visible without breaking the application.
 ---
@@ -142,15 +142,15 @@ While building the application, I encountered several ambiguities in the raw Jus
 
 If I had more time, I would expand the application with the following product and technical enhancements:
 
-- **Interactive Postcode Search**: Implement a fully validated UI input field, allowing users to dynamically fetch and explore restaurants for any valid UK postcode instead of relying on a static query.
-- **Dynamic Sorting Mechanisms**: Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
-- **Granular Faceted Filtering**: Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines, individual food items, or a strict minimum star rating.
-- **Geolocation Integration**: Utilize the browser's Geolocation API to capture the user's actual coordinates. I would then use a Haversine formula on the backend to calculate and display the exact physical distance between the user and each restaurant.
-- **Rich Commercial Data Integration**: Safely expand the project scope to utilize the other highly valuable data points available in the Just Eat API response, transforming the UI into a fully functional food delivery platform.
-- **Persistent Storage Architecture**: Transition from the current in-memory data management approach to securely store restaurant schemas, geographical data, and application states, possible user related data that may added in future such as user preferences, favorite restaurants, order history, etc.
-- **Identity Management & Social Engagement**: Implement a secure user authentication system (e.g., JWT or OAuth 2.0) to support personalized user accounts. This would unlock community-driven features, allowing users to save favorite restaurants, highlight specific menu items, and leave interactive comments or reviews.
-- **Cross-Platform Mobile Integration**: Acknowledging that food delivery is primarily a mobile-driven user journey, I would convert the web application into a Progressive Web App (PWA) for offline capabilities, or migrate the frontend UI components to **React Native** to deploy native iOS and Android applications.
-- **Two-Sided Marketplace & Vendor Portal**: Expand the application from a consumer-only interface into a full two-sided marketplace. I would develop a dedicated vendor portal where restaurant owners can create provider accounts, claim their business, and dynamically manage their own profiles, menus, and marketing tags.
+1. **Interactive Postcode Search**: Implement a fully validated UI input field, allowing users to dynamically fetch and explore restaurants for any valid UK postcode instead of relying on a static query.
+2. **Dynamic Sorting Mechanisms**: Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
+3. **Granular Faceted Filtering**: Introduce UI toggles and sliders to allow users to filter the fetched list by specific cultural cuisines, individual food items, or a strict minimum star rating.
+4. **Geolocation Integration**: Utilize the browser's Geolocation API to capture the user's actual coordinates. I would then use a Haversine formula on the backend to calculate and display the exact physical distance between the user and each restaurant.
+5. **Rich Commercial Data Integration**: Safely expand the project scope to utilize the other highly valuable data points available in the Just Eat API response, transforming the UI into a fully functional food delivery platform.
+6. **Persistent Storage Architecture**: Transition from the current in-memory data management approach to securely store restaurant schemas, geographical data, and application states, possible user related data that may added in future such as user preferences, favorite restaurants, order history, etc.
+7. **Identity Management & Social Engagement**: Implement a secure user authentication system (e.g., JWT or OAuth 2.0) to support personalized user accounts. This would unlock community-driven features, allowing users to save favorite restaurants, highlight specific menu items, and leave interactive comments or reviews.
+8. **Cross-Platform Mobile Integration**: Acknowledging that food delivery is primarily a mobile-driven user journey, I would convert the web application into a Progressive Web App (PWA) for offline capabilities, or migrate the frontend UI components to **React Native** to deploy native iOS and Android applications.
+9. **Two-Sided Marketplace & Vendor Portal**: Expand the application from a consumer-only interface into a full two-sided marketplace. I would develop a dedicated vendor portal where restaurant owners can create provider accounts, claim their business, and dynamically manage their own profiles, menus, and marketing tags.
 
 ---
 *Created by Arda Guney - JET Coding Assignment*
