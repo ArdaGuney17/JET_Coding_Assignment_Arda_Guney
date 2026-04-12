@@ -137,15 +137,25 @@ The raw `fetch()` call is isolated in a dedicated service module. This means the
 #### Component Hierarchy
 The UI is composed with a clear responsibility split:
 
-```
+```text
 App
- └── MainView          ← orchestrates layout, consumes useRestaurants hook
-      ├── Header       ← static branding / navigation
-      └── RestaurantListFrame
-           ├── LoaderList          ← skeleton/loading state
-           ├── ErrorStatesList     ← error boundary display
-           └── RestaurantCards     ← renders each restaurant card
-                └── SharedComponentsWithCards  ← reusable sub-elements (MiniMap, tags, rating, etc.)
+ └── MainView                               ← orchestrates layout, consumes useRestaurants hook
+      ├── Header                            ← static branding / navigation
+      └── RestaurantList/
+           ├── RestaurantListFrame          ← layout wrapper for the list
+           ├── LoaderList/                  ← skeleton/loading states (e.g. JETFetchLoader)
+           ├── ErrorStatesList/             ← error boundaries (APIFetchError, RestaurantListEmpty)
+           ├── SharedComponentsWithCards/   ← reusable sub-elements (e.g. Tag)
+           └── RestaurantCards/
+                ├── RestaurantPreviewCard   ← orchestrates a single restaurant card
+                ├── LoaderCards/            ← card-specific loaders
+                ├── ErrorStatesCards/       ← card-specific fallbacks
+                └── RestaurantCardsComponents/
+                     ├── CardHeader         ← restaurant name and tags
+                     ├── CardBody           ← cuisines, rating, address
+                     └── MiniMap            ← orchestrates map loading and state
+                          └── MiniMapComponents/
+                               └── MiniMapFrame  ← Google Maps iframe
 ```
 
 Each sub-directory within `RestaurantList/` owns a specific UI state (loading, error, data), keeping individual files small and focused.
