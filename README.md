@@ -1,6 +1,6 @@
 # 🍽️ Return First 10 Restaurants - JET Complete at Home Coding Assignment
 
-A professional, enterprise-grade full-stack application for discovering top-rated restaurants. Built with a focus on modularity, data resilience, and automated testing.
+My solution to the JET Complete at Home Coding Assignment. Return First 10 Restaurants and their requested data name, cuisines, rating and address.
 
 ## 🚀 Quick Start: How to Run
 
@@ -64,6 +64,16 @@ npm run test:ui     # Interactive Dashboard mode
 
 ---
 
+## 🛠️ Data Coverage (Assignment Requirements)
+
+I have ensured that all four mandatory data points are explicitly and clearly displayed:
+1.  **Name**: Isolated names of the restaurant as the title on each card.
+2.  **Cuisines**: Highlighted the primary ethnical cuisines and displayed the other food and marketing related data as tags.
+3.  **Rating**: Displayed as a clear numerical value (e.g., `4.5 / 5`).
+4.  **Address**: Displayed the human readable address as the main address and used the unreadable coordinates to display the address on the map.
+
+---
+
 ## 🧠 Key Assumptions & Decisions
 
 1.  **Data Transformation Layer**: The raw Just Eat API provides overlapping data in fields like `cuisines` and `ethnicity`. I implemented a **Custom Transformer** that aggregates these into a high-quality "Specialties" list to ensure the user sees the most relevant information.
@@ -71,18 +81,11 @@ npm run test:ui     # Interactive Dashboard mode
 3.  **Resilience (Network & Data)**: I assumed that the external API might occasionally be slow or provide corrupted data. I implemented:
     - **In-Memory Caching**: To prevent redundant network calls.
     - **Fallback UI**: If a single restaurant's data is corrupted, only that specific card shows an error state, while the rest of the list remains functional.
-4.  **Casing Sensitivity**: To handle Windows/Unix discrepancies, a `jsconfig.json` was added to force consistent path casing (`ARDA` vs `ArDA`), ensuring the Vitest runner remains stable.
+4.  **Casing Sensitivity**: To handle Windows/Unix discrepancies, I added a `jsconfig.json` to force consistent path casing (`ARDA` vs `ArDA`), ensuring the Vitest runner remains stable.
 
 ---
 
-## 🛠️ Data Coverage (Assignment Requirements)
-
-I have ensured that all four mandatory data points are explicitly and clearly displayed:
-1.  **Name**: Prominent title on every card.
-2.  **Cuisines**: Grouped and styles with branded tags.
-3.  **Rating**: Displayed as a clear numerical value (e.g., `4.5 / 5`).
-4.  **Address**: Displayed with geographic icons for quick scannability.
-
+    
 ---
 
 ## ✨ Future Improvements

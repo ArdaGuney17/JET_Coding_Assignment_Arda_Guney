@@ -14,7 +14,7 @@ As per the assignment brief, the following mandatory data points are successfull
 
 ---
 
-## 2. Advanced Improvements (The "Arda" Edition)
+## 2. Improvements Done By Personal Touch
 
 Beyond the basic requirements, several sophisticated logic layers were added to ensure the application feels professional and resilient.
 
@@ -36,17 +36,17 @@ Raw coordinates (like `0.12, 51.52`) are unreadable to humans.
 
 ### 🛡️ The 5 Layers of Resilience (Error Handling)
 
-We assumed that every external dependency (the API, the network, the GPS data) could fail. We built 5 distinct layers of protection:
+I assumed that every external dependency (the API, the network, the GPS data) could fail. I built 5 distinct layers of protection:
 
 #### Layer 1: Network & Timeout Safety (Backend)
 - **`JETDataFetcher`**: All network calls are wrapped in `try-except urllib` blocks. If the external Just Eat API is down or times out, the backend doesn't crash; it logs the error and returns a clean `None`, preventing a system-wide failure.
 
 #### Layer 2: Data Schema Defense (Backend)
-- **`RestaurantTransformer`**: We use defensive `.get()` calls for every nested field (Address, Rating, Location). This ensures that if the API schema changes or a field is missing, the code doesn't throw a `KeyError`.
+- **`RestaurantTransformer`**: I used defensive `.get()` calls for every nested field (Address, Rating, Location). This ensures that if the API schema changes or a field is missing, the code doesn't throw a `KeyError`.
 - **`_clean_name`**: The name-cleaning logic is isolated in its own `try-except` block. If the cleaning logic encounters a bizarre character or null value, it falls back to a branded "New Restaurant" label instead of breaking the transformer.
 
 #### Layer 3: Architectural Orchestration (Backend)
-- **`RestaurantService`**: Before attempting to loop through data, the Orchestrator checks for `if not raw_data`. If the API returns an empty object or a 404, the service simply returns an empty list `[]`, which the frontend can then handle gracefully.
+- **`RestaurantService`**: Before attempting to loop through data, I checked for `if not raw_data`. If the API returns an empty object or a 404, the service simply returns an empty list `[]`, which the frontend can then handle gracefully.
 
 #### Layer 4: Lifecycle & UI States (Frontend)
 - **State Management**: The main application tracks `isLoading` and `error` states. 
@@ -54,7 +54,7 @@ We assumed that every external dependency (the API, the network, the GPS data) c
     - **`EmptyState`**: If the postcode has no restaurants, the `RestaurantListFrame` detects `isEmpty` and renders a themed "No Restaurants Found" illustration.
 
 #### Layer 5: Component-Level Isolation (Frontend)
-- **`MiniMap.isCoordValid`**: Before asking Google to render a map, we validate the GPS coordinates. If they are malformed or missing, we render an "In-Card Error" message specifically for that map, keeping the rest of the restaurant card interactive.
+- **`MiniMap.isCoordValid`**: Before asking Google to render a map, I validated the GPS coordinates. If they are malformed or missing, I render an "In-Card Error" message specifically for that map, keeping the rest of the restaurant card interactive.
 - **`FallbackRestaurantCard`**: This acts as an "Emergency Buffer." If a specific restaurant's data is so corrupted that it can't be displayed, we render a standalone "Restaurant Unavailable" card for that item only, allowing the other 9 restaurants to still be visible to the user.
 
 ---
@@ -82,16 +82,16 @@ We assumed that every external dependency (the API, the network, the GPS data) c
 
 ## 4. Automated Testing & Quality Assurance
 
-To ensure the long-term stability and resilience of the application, we implemented a dual-layer automated testing suite with **27/27 successful test cases**.
+To ensure the long-term stability and resilience of the application, I implemented a dual-layer automated testing suite with **27/27 successful test cases**.
 
 ### 🐍 Backend Testing (Pytest)
-We utilized `pytest` to verify the "God-Tier" modularity of our backend architecture:
+I utilized `pytest` to verify the "God-Tier" modularity of our backend architecture:
 - **Transformer Unit Tests**: Verified name-cleaning logic, address formatting, and the three-tier cuisine classification.
 - **Service Mocking**: Implemented `unittest.mock` to isolate the Orchestrator, allowing us to test business logic independently of external network conditions.
 - **Integration Tests**: Used FastAPI's `TestClient` to conduct high-level API route testing, ensuring our endpoints return correct status codes and JSON schemas.
 
 ### ⚛️ Frontend Testing (Vitest & RTL)
-We utilized `Vitest` and `React Testing Library` to verify UI resilience and component behavior:
+I utilized `Vitest` and `React Testing Library` to verify UI resilience and component behavior:
 - **Requirement Verification**: Component tests ensure that Name, Cuisine, Rating, and Address are always rendered as expected.
 - **Data Resilience (The Stress Test)**: Specifically tested components against **null, undefined, and corrupted data**. These tests confirm that our "Fallback" UI prevents a single broken restaurant from crashing the entire list.
 - **Interactive Mapping Logic**: Verified that the `MiniMap` correctly detects missing coordinates and renders a graceful error state rather than a broken iframe.
