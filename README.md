@@ -75,14 +75,14 @@ Lets start by setting up the backend:
 ### Backend Tests (Pytest)
 Includes unit tests for transformers, service mocks, and API endpoints.
 ```bash
-cd backend
-.\venv\Scripts\python -m pytest tests/
+cd backend                                # first go to the backend folder if you are not already there
+.\venv\Scripts\python -m pytest tests/    # run the tests
 ```
 
 ### Frontend Tests (Vitest)
 Includes component resilience tests and UI verification.
 ```bash
-cd frontend
+cd frontend         # first go to the frontend folder if you are not already there
 npm run test        # Terminal mode
 npm run test:ui     # Interactive Dashboard mode
 ```
