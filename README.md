@@ -57,7 +57,6 @@ The backend manages data fetching, transformation, and caching.
     npm run dev
     ```
     *The UI will be available at http://localhost:5173/*
-    ```
 4.  **Install dependencies**:
     ```bash
     npm install
