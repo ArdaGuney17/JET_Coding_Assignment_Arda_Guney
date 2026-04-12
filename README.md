@@ -161,7 +161,7 @@ If I had more time, I would expand the application with the following product an
 
 2. **Dynamic Sorting Mechanisms**
 
-    * Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), or by total review count.
+    * Expand beyond the default "highest rating" sort. I would add user-controlled sorting preferences, allowing them to order the restaurant list alphabetically, by proximity (distance), by total review count and by the marketing and dietary tags I have created for the solution of the second problem listed in the "Ambiguities" section (e.g. "Deals", "Halal", etc.).
 
 3. **Granular Faceted Filtering**
 
