@@ -42,17 +42,27 @@ The backend manages data fetching, transformation, and caching.
     *The API will be available at `http://127.0.0.1:8000/`*
 
 ### 2. Frontend (React + Vite)
-The frontend provides a premium, responsive UI with interactive maps and error handling.
+**Important:** Keep the backend terminal running. Open a **new, second terminal** window for these steps.
 
-1.  **Navigate to the frontend folder**:
+1.  **Navigate to your clone location**:
+    First, `cd` into the same folder where you originally ran the `git clone` command (e.g., Desktop, Downloads, etc.).
+    
+2.  **Enter the project and frontend folders**:
     ```bash
-    cd frontend
+    cd JET_Coding_Assignment_Arda_Guney/frontend
     ```
-2.  **Install dependencies**:
+3.  **Install and Run**:
+    ```bash
+    npm install
+    npm run dev
+    ```
+    *The UI will be available at http://localhost:5173/*
+    ```
+4.  **Install dependencies**:
     ```bash
     npm install
     ```
-3.  **Run the development server**:
+5.  **Run the development server**:
     ```bash
     npm run dev
     ```
