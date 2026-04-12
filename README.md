@@ -83,8 +83,8 @@ cd backend                                # first go to the backend folder if yo
 Includes component resilience tests and UI verification.
 ```bash
 cd frontend         # first go to the frontend folder if you are not already there
-npm run test        # Terminal mode
-npm run test:ui     # Interactive Dashboard mode
+npm run test        # run the tests in Terminal mode
+npm run test:ui     # run the tests in Interactive Dashboard mode
 ```
 
 ---
