@@ -59,17 +59,24 @@ We assumed that every external dependency (the API, the network, the GPS data) c
 
 ---
 
-## 3. Major Function Registry
+## 3. Full Project Function Registry
 
-| Layer | Function | Purpose |
+| Layer | Function / Component | Purpose |
 | :--- | :--- | :--- |
-| **Backend** | `RestaurantTransformer._clean_name` | Removes noise and separators from the brand name. |
-| **Backend** | `RestaurantTransformer._extract_cuisines_and_tags` | Categorizes raw tags into Cultural, Specialty, or Marketing. |
-| **Backend** | `RestaurantFetcher.fetch_restaurants` | Handles HTTP communication and timeouts with the external API. |
-| **Backend** | `Orchestrator.get_top_rated_restaurants` | Manages the flow between Fetching -> Transforming -> Caching. |
-| **Frontend** | `MiniMap.isCoordValid` | Validates that GPS data exists before attempting to render a map. |
-| **Frontend** | `RestaurantListFrame.useEffect` | Manages the API lifecycle (Loading -> Success -> Error). |
-| **Frontend** | `FallbackRestaurantCard` | Renders a "Safety State" if a component enters an error state. |
+| **Backend (Setup)** | `setup.startup.create_app` | The "Factory" that assembles and returns the FastAPI instance. |
+| **Backend (Setup)** | `setup.middleware.setup_middleware` | Configures security policies (CORS) for every incoming request. |
+| **Backend (API)** | `api.routes.get_restaurants` | The primary entry point that exposes the data to the internet. |
+| **Backend (Logic)** | `RestaurantTransformer._clean_name` | Removes noise and separators from the raw brand names. |
+| **Backend (Logic)** | `RestaurantTransformer._extract_cuisines_and_tags` | Categorizes raw tags into Cultural, Specialty, or Marketing groups. |
+| **Backend (Logic)** | `RestaurantFetcher.fetch_restaurants` | Handles low-level HTTP communication and network timeouts. |
+| **Backend (Logic)** | `Orchestrator.get_top_rated_restaurants` | Orchestrates the data flow and manages the in-memory cache. |
+| **Frontend (Core)** | `App.jsx / useEffect` | The "State Engine" that manages Loading, Success, and Error cycles. |
+| **Frontend (UI)** | `RestaurantPreviewCard` | The high-level orchestrator for individual restaurant entries. |
+| **Frontend (UI)** | `CardDetails` | Ensures Name, Cuisines, Rating, and Address are formatted for the user. |
+| **Frontend (UI)** | `MiniMap` | Converts coordinate data into a visual Google Maps experience. |
+| **Frontend (UI)** | `Tag` | A reusable, branded styling element used for all metadata and tags. |
+| **Frontend (UI)** | `JETFetchLoader` | Provides a branded, themed loading experience for the user. |
+| **Frontend (Safety)** | `FallbackRestaurantCard` | Isolates errors so broken data doesn't impact the rest of the UI. |
 
 ---
 *Documented by Arda Guney - Strategic Implementation*
