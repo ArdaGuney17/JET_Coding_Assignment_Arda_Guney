@@ -1,24 +1,35 @@
-from fastapi import Depends
+from functools import lru_cache
 from services import RestaurantService, JETDataFetcher, RestaurantTransformer
 from config import AppConfig
 
 # --- THE DEPENDENCY PIPELINE ---
 
-def get_data_fetcher() -> JETDataFetcher:
-    """Provides a configured JETDataFetcher instance."""
+@lru_cache
+def _get_data_fetcher() -> JETDataFetcher:
+    """Singleton: one JETDataFetcher instance for the lifetime of the process."""
     return JETDataFetcher(
         AppConfig.DISCOVERY_API_URL, 
         AppConfig.DEFAULT_POSTCODE, 
         AppConfig.HEADERS
     )
 
-def get_restaurant_transformer() -> RestaurantTransformer:
-    """Provides a configured RestaurantTransformer instance."""
+@lru_cache
+def _get_restaurant_transformer() -> RestaurantTransformer:
+    """Singleton: one RestaurantTransformer instance for the lifetime of the process."""
     return RestaurantTransformer(AppConfig.EXCLUDED_TAGS)
 
-def get_restaurant_service(
-    fetcher: JETDataFetcher = Depends(get_data_fetcher),
-    transformer: RestaurantTransformer = Depends(get_restaurant_transformer)
-) -> RestaurantService:
-    """Combines fetcher and transformer into a unified RestaurantService."""
-    return RestaurantService(fetcher, transformer)
+@lru_cache
+def _build_restaurant_service() -> RestaurantService:
+    """
+    Singleton builder: constructs the RestaurantService exactly once.
+    Using lru_cache ensures the same instance (and its in-memory cache) is
+    reused on every request, so cached restaurant data actually persists.
+    """
+    return RestaurantService(
+        fetcher=_get_data_fetcher(),
+        transformer=_get_restaurant_transformer()
+    )
+
+def get_restaurant_service() -> RestaurantService:
+    """FastAPI dependency: returns the cached singleton RestaurantService."""
+    return _build_restaurant_service()
