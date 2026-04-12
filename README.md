@@ -89,6 +89,69 @@ npm run test:ui     # run the tests in Interactive Dashboard mode
 
 ---
 
+## 🏗️ Design & Architecture
+
+The application follows a **decoupled, two-tier architecture**: a Python backend that owns all data-fetching and transformation logic, and a React frontend that is purely responsible for rendering. The two communicate over a single REST endpoint, keeping each side independently testable and replaceable.
+
+---
+
+### Backend — FastAPI (Python)
+
+#### App Factory Pattern
+The application is bootstrapped via a `create_app()` factory function (`setup/startup.py`) instead of a bare module-level FastAPI instance. This decouples middleware registration, router mounting, and configuration from the entry point (`main.py`), making the app easy to test in isolation and straightforward to extend.
+
+#### Layered Service Pipeline
+All business logic is separated into three single-responsibility classes inside the `services/` package:
+
+| Layer | File | Responsibility |
+|---|---|---|
+| **Fetcher** | `fetcher.py` | Makes the raw HTTP call to the Just Eat public API and returns the unprocessed JSON payload. |
+| **Transformer** | `transformer.py` | Converts raw dicts into typed `Restaurant` Pydantic models; normalises names, classifies cuisines, and extracts coordinates. |
+| **Orchestrator** | `orchestrator.py` | Coordinates the Fetcher and Transformer, applies the rating sort, enforces the result limit, and manages in-memory caching. |
+
+#### Pydantic Data Model
+A strict `Restaurant` model (`models/restaurant.py`) acts as the contract between the service layer and the API response. Pydantic validates every field at runtime, so malformed upstream data never silently reaches the client.
+
+#### In-Memory Caching
+The `RestaurantService` (Orchestrator) caches the last successful response in memory with a configurable TTL (`AppConfig.CACHE_TTL`). This prevents hammering the Just Eat API on repeated requests and avoids HTTP 429 rate-limit errors during development and testing.
+
+#### Centralised Configuration (`config/`)
+All magic strings (API paths, JSON schema keys, separator characters, cuisine taxonomy lists, fallback values) are consolidated inside `AppConfig`. No raw string literals appear inside business logic, making the application resilient to upstream API changes with a single-file edit.
+
+#### Dependency Injection
+FastAPI's `Depends()` system (`api/dependencies.py`) is used to inject the `RestaurantService` into route handlers. This means the full service graph (Fetcher → Transformer → Orchestrator) is wired up once and shared, not re-created on every request, and can be swapped for mocks in tests.
+
+---
+
+### Frontend — React + Vite
+
+#### Technology Choice
+I chose **Vite** as the build tool for its near-instant HMR (Hot Module Replacement) and minimal configuration overhead. The frontend itself is plain **React** with no external state management library, since the data requirements are simple enough that local component state and a custom hook are sufficient.
+
+#### Custom Hook as the Data Layer (`useRestaurants`)
+All data-fetching concerns (loading state, error state, API call) are encapsulated in a single custom hook (`hooks/useRestaurants.js`). Components that consume it receive a clean `{ restaurants, loading, error }` tuple and remain fully decoupled from any fetching implementation details.
+
+#### Service Abstraction (`services/restaurantService.js`)
+The raw `fetch()` call is isolated in a dedicated service module. This means the hook only calls a named function (`fetchRestaurants()`), so the transport layer (URL, headers, error handling) can be changed or mocked without touching any component.
+
+#### Component Hierarchy
+The UI is composed with a clear responsibility split:
+
+```
+App
+ └── MainView          ← orchestrates layout, consumes useRestaurants hook
+      ├── Header       ← static branding / navigation
+      └── RestaurantListFrame
+           ├── LoaderList          ← skeleton/loading state
+           ├── ErrorStatesList     ← error boundary display
+           └── RestaurantCards     ← renders each restaurant card
+                └── SharedComponentsWithCards  ← reusable sub-elements (MiniMap, tags, rating, etc.)
+```
+
+Each sub-directory within `RestaurantList/` owns a specific UI state (loading, error, data), keeping individual files small and focused.
+
+---
+
 ## 🛠️ Data Coverage (Assignment Requirements)
 
 I have ensured that all four mandatory data points are explicitly and clearly displayed:
