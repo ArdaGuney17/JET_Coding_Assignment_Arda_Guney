@@ -34,10 +34,28 @@ Raw coordinates (like `0.12, 51.52`) are unreadable to humans.
 - **Implementation**: Instead of letting these strings "go astray," we integrated a **MiniMap** component. 
 - **Outcome**: The backend extracts these coordinates and the frontend injects them into a Google Maps Embed frame, giving the user instant visual context of where the restaurant is located.
 
-### 🛡️ Resilience & Error Handling
-We assumed the external API might fail or provide corrupted data. We built a "Safety Net" system:
-- **Backend**: Every data point is wrapped in a `try-except` block or a defensive `.get()` call with fallbacks like "Unknown Restaurant" or "N/A".
-- **Frontend**: We implemented **Component Isolation**. If one restaurant has corrupted data, we show a `FallbackRestaurantCard` for that item only. This prevents a single broken piece of data from crashing the entire application.
+### 🛡️ The 5 Layers of Resilience (Error Handling)
+
+We assumed that every external dependency (the API, the network, the GPS data) could fail. We built 5 distinct layers of protection:
+
+#### Layer 1: Network & Timeout Safety (Backend)
+- **`JETDataFetcher`**: All network calls are wrapped in `try-except urllib` blocks. If the external Just Eat API is down or times out, the backend doesn't crash; it logs the error and returns a clean `None`, preventing a system-wide failure.
+
+#### Layer 2: Data Schema Defense (Backend)
+- **`RestaurantTransformer`**: We use defensive `.get()` calls for every nested field (Address, Rating, Location). This ensures that if the API schema changes or a field is missing, the code doesn't throw a `KeyError`.
+- **`_clean_name`**: The name-cleaning logic is isolated in its own `try-except` block. If the cleaning logic encounters a bizarre character or null value, it falls back to a branded "New Restaurant" label instead of breaking the transformer.
+
+#### Layer 3: Architectural Orchestration (Backend)
+- **`RestaurantService`**: Before attempting to loop through data, the Orchestrator checks for `if not raw_data`. If the API returns an empty object or a 404, the service simply returns an empty list `[]`, which the frontend can then handle gracefully.
+
+#### Layer 4: Lifecycle & UI States (Frontend)
+- **State Management**: The main application tracks `isLoading` and `error` states. 
+    - **`APIFetchError`**: If the total backend fails, the user sees a helpful, styled error message instead of a blank white screen.
+    - **`EmptyState`**: If the postcode has no restaurants, the `RestaurantListFrame` detects `isEmpty` and renders a themed "No Restaurants Found" illustration.
+
+#### Layer 5: Component-Level Isolation (Frontend)
+- **`MiniMap.isCoordValid`**: Before asking Google to render a map, we validate the GPS coordinates. If they are malformed or missing, we render an "In-Card Error" message specifically for that map, keeping the rest of the restaurant card interactive.
+- **`FallbackRestaurantCard`**: This acts as an "Emergency Buffer." If a specific restaurant's data is so corrupted that it can't be displayed, we render a standalone "Restaurant Unavailable" card for that item only, allowing the other 9 restaurants to still be visible to the user.
 
 ---
 
