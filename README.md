@@ -128,6 +128,9 @@ FastAPI's `Depends()` system (`api/dependencies.py`) is used to inject the `Rest
 #### Technology Choice
 I chose **Vite** as the build tool for its near-instant HMR (Hot Module Replacement) and minimal configuration overhead. The frontend itself is plain **React** with no external state management library, since the data requirements are simple enough that local component state and a custom hook are sufficient.
 
+#### Styling Framework (Tailwind CSS)
+All styling logic is handled using **Tailwind CSS**. I chose a utility-first CSS framework over traditional stylesheets or heavy component libraries (like Material UI) to keep the bundle size minimal, ensure a consistent design system, and maintain responsive layouts without leaving the JSX structure.
+
 #### Custom Hook as the Data Layer (`useRestaurants`)
 All data-fetching concerns (loading state, error state, API call) are encapsulated in a single custom hook (`hooks/useRestaurants.js`). Components that consume it receive a clean `{ restaurants, loading, error }` tuple and remain fully decoupled from any fetching implementation details.
 
